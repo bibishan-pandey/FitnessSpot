@@ -1,6 +1,6 @@
-# Fitness Tracker
+# Fitness Spot
 
-Fitness Tracker is a web application built with Django that allows users to track their workouts, nutrition, progress, and engage with a community of fitness enthusiasts.
+Fitness Spot is a web application built with Django that allows users to track their workouts, nutrition, progress, and engage with a community of fitness enthusiasts.
 
 ## Features
 
@@ -15,7 +15,7 @@ Fitness Tracker is a web application built with Django that allows users to trac
 
 The project directory structure is organized as follows:
 
-- `fitness_tracker/`: Main project directory containing settings and configurations.
+- `fitness_spot/`: Main project directory containing settings and configurations.
 - `authentication/`: App for user authentication.
 - `workout_tracking/`: App for workout tracking functionality.
 - `nutrition_tracking/`: App for nutrition tracking functionality.
@@ -34,7 +34,7 @@ The project directory structure is organized as follows:
 2. Navigate to the project directory:
 
    ```bash
-    cd FitnessTracker
+    cd FitnessSpot
    ```
 
 3. Create and activate a virtual environment (If `venv` is not created, run both commands, otherwise run the second command only):
