@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     # custom apps
     'auths',
     'core',
-    'addons'
+    'addons',
+
+    # Third-party apps
+    'crispy_forms',
+    'taggit',
+    'import_export'
 ]
 
 MIDDLEWARE = [
