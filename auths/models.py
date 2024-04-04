@@ -1,7 +1,9 @@
 import uuid
 
+import shortuuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
 
 GENDER = (
@@ -86,8 +88,17 @@ class Profile(models.Model):
     friends = models.ManyToManyField(User, related_name="friends", blank=True)
     blocked = models.ManyToManyField(User, related_name="blocked", blank=True)
 
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if self.slug is None or self.slug == "":
+            uuid_key = shortuuid.uuid()
+            slug_value = self.user.username if self.user.first_name is None or self.user.first_name == "" else self.user.first_name
+            self.slug = slugify(slug_value) + "-" + str(uuid_key[:3].lower())
+        super(Profile, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username
