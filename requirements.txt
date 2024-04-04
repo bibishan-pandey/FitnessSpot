@@ -4,6 +4,7 @@ diff-match-patch==20230430
 Django==5.0.3
 django-crispy-forms==2.1
 django-import-export==3.3.7
+django-jazzmin==2.6.1
 django-taggit==5.0.1
 django-unfold==0.21.1
 et-xmlfile==1.1.0
