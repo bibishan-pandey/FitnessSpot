@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from auths.forms import UserCreationForm
@@ -61,3 +61,8 @@ def signin(request, *args, **kwargs):
             messages.error(request, "Invalid email or password. Please try again.")
 
     return render(request, 'auths/register.html')
+
+
+def signout(request):
+    logout(request)
+    return redirect("auths:fitness-register")

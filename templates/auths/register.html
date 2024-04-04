@@ -41,7 +41,7 @@
                 <form class="p-6 space-y-4 relative bg-white shadow-lg rounded-lg" method="POST"
                       action="{% url 'auths:fitness-login' %}">
                     {% csrf_token %}
-                    <input type="email" name="email" placeholder="Email or Phone Number" class="with-border">
+                    <input type="email" name="email" placeholder="Email address" class="with-border">
                     <input type="password" name="password" placeholder="Password" class="with-border">
                     <button type="submit"
                             class="bg-blue-600 font-semibold p-3 rounded-md text-center text-white w-full"> Login
@@ -87,7 +87,7 @@
                 <div class="grid lg:grid-cols-2 gap-3">
                     <div>
                         <label class="">Gender</label>
-                        <select name="gender" class="with-border">
+                        <select name="gender" class="with-border px-4">
                             {% for value, label in form.gender.field.choices %}
                                 <option value="{{ value }}">{{ label }}</option>
                             {% endfor %}
