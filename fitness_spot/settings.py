@@ -144,6 +144,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'auths.User'
 
+LOGIN_REDIRECT_URL = ''
+LOGIN_URL = 'auths:fitness-register'
+LOGOUT_REDIRECT_URL = "auths:fitness-register"
+
 # JAZZMIN_UI_TWEAKS = {
 #     "theme": "flatly",
 #     # "dark_mode_theme": "darkly",
