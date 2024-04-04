@@ -41,3 +41,23 @@ def register(request, *args, **kwargs):
         'form': form
     }
     return render(request, 'auths/register.html', context)
+
+
+def signin(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        messages.info(request, "You are already logged in.")
+        return redirect('core:fitness-feed')
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Hi {user.username}, you are now logged in.")
+            return redirect('core:fitness-feed')
+        else:
+            messages.error(request, "Invalid email or password. Please try again.")
+
+    return render(request, 'auths/register.html')
