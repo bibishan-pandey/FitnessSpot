@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/css/icons.css">
+    <link rel="stylesheet" href="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/css/uikit.css">
+    <link rel="stylesheet" href="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/css/style.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <title>
+        {% block title %}
+            Fitness Spot
+        {% endblock %}
+    </title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        {% include 'partials/navbar.html' %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
+    <script src="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/js/tippy.all.min.js" defer></script>
+    <script src="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/js/uikit.js" defer></script>
+    <script src="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/js/simplebar.js" defer></script>
+    <script src="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/js/custom.js" defer></script>
+    <script src="https://s3.eu-central-1.wasabisys.com/bettercollected/assets/js/bootstrap-select.min.js" defer></script>
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js" defer></script>
+
+    <!-- For Night mode -->
+    <script defer>
+        (function (window, document, undefined) {
+            'use strict';
+            if (!('localStorage' in window)) return;
+            var nightMode = localStorage.getItem('gmtNightMode');
+            if (nightMode) {
+                document.documentElement.className += ' night-mode';
+            }
+        })(window, document);
+
+        (function (window, document, undefined) {
+
+            'use strict';
+
+            // Feature test
+            if (!('localStorage' in window)) return;
+
+            // Get our newly insert toggle
+            var nightMode = document.querySelector('#night-mode');
+            if (!nightMode) return;
+
+            // When clicked, toggle night mode on or off
+            nightMode.addEventListener('click', function (event) {
+                event.preventDefault();
+                document.documentElement.classList.toggle('dark');
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('gmtNightMode', true);
+                    return;
+                }
+                localStorage.removeItem('gmtNightMode');
+            }, false);
+
+        })(window, document);
+    </script>
+
+    <!-- Search Functionality -->
+    <script defer>
+        $(document).ready(function () {
+            $('#search-input').on('input', function () {
+                const query = $(this).val().trim();
+
+                if (query) {
+                    $.ajax({
+                        url: '/search/',
+                        data: {
+                            'q': query,
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            const resultsUl = $('#search-results');
+                            resultsUl.empty();
+
+                            for (const user of data.users) {
+                                const listItem = $('<li></li>');
+
+                                const link = $('<a></a>').attr('href', '/user/profile/' + user.username + '/');
+                                listItem.append(link);
+
+                                if (user.profile_image) {
+                                    const profileImage = $('<img>').attr('src', user.profile_image);
+                                    profileImage.attr('alt', 'Profile Image');
+                                    profileImage.addClass('list-avatar');
+                                    link.append(profileImage);
+                                }
+
+                                const nameDiv = $('<div></div>').addClass('list-name').text(user.full_name);
+                                link.append(nameDiv);
+
+                                resultsUl.append(listItem);
+                            }
+                        },
+                        error: function () {
+                            console.log('Error occurred during the AJAX request.');
+                        }
+                    });
+                } else {
+                    $('#search-results').empty();
+                }
+            });
+        });
+    </script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

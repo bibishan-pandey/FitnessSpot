@@ -9,10 +9,9 @@
                         <path d="M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z" fill="currentColor"></path>
                     </svg>
                 </span>
-                <div id="logo">
+                <div id="logo" class="flex items-center justify-center">
                     <a href="{% url 'core:fitness-feed' %}">
-                        <img src="{% static 'assets/images/logo.png' %}" alt="">
-                        <img src="{% static 'assets/images/logo-mobile.png' %}" class="logo_mobile" alt="">
+                        Fitness <span class="font-semibold">Spot</span>
                     </a>
                 </div>
             </div>
@@ -20,11 +19,10 @@
             <!-- search icon for mobile -->
             <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"></div>
             <div class="header_search"><i class="uil-search-alt"></i>
-                <input value="" type="text" class="form-control" placeholder="Search for Friends , Videos and more.."
+                <input value="" type="text" class="form-control" placeholder="Search for Friends, Workout and more.."
                        id="search-input" autocomplete="off">
                 <div uk-drop="mode: click" class="header_search_dropdown">
-
-                    <h4 class="search_title"> Recently </h4>
+                    <h4 class="search_title">Recently</h4>
                     <!-- <ul>
 
                                 <li>
@@ -35,57 +33,15 @@
                                 </li>
 
                             </ul> -->
-                    <ul id="search-results"></ul>
+                    <ul id="search-results">
+                        <li>
+                            <a href="#">
+                                <div class="list-name px-1">No results</div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-
-            <script>
-                $(document).ready(function () {
-                    $('#search-input').on('input', function () {
-                        const query = $(this).val().trim();
-
-                        if (query) {
-                            $.ajax({
-                                url: '/search/',
-                                data: {
-                                    'q': query,
-                                },
-                                dataType: 'json',
-                                success: function (data) {
-                                    const resultsUl = $('#search-results');
-                                    resultsUl.empty();
-
-                                    for (const user of data.users) {
-                                        const listItem = $('<li></li>');
-
-                                        const link = $('<a></a>').attr('href', '/user/profile/' + user.username + '/');
-                                        listItem.append(link);
-
-                                        if (user.profile_image) {
-                                            const profileImage = $('<img>').attr('src', user.profile_image);
-                                            profileImage.attr('alt', 'Profile Image');
-                                            profileImage.addClass('list-avatar');
-                                            link.append(profileImage);
-                                        }
-
-                                        const nameDiv = $('<div></div>').addClass('list-name').text(user.full_name);
-                                        link.append(nameDiv);
-
-                                        resultsUl.append(listItem);
-                                    }
-                                },
-                                error: function () {
-                                    console.log('Error occurred during the AJAX request.');
-                                }
-                            });
-                        } else {
-                            $('#search-results').empty();
-                        }
-                    });
-                });
-
-            </script>
 
             <div class="right_side">
 
@@ -417,7 +373,7 @@
                                     {% endif %}
                                     {% if request.user == m.reciever %}
                                         <li class="un-read" style="overflow: hidden;">
-{#                                            {% url 'core:inbox_detail' m.sender.username %}#}
+                                            {#                                            {% url 'core:inbox_detail' m.sender.username %}#}
                                             <a href="">
                                                 <div class="drop_avatar"><img
                                                         style="object-fit: cover; width: 40px; height: 40px;"
