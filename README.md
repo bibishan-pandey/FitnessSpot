@@ -28,13 +28,13 @@ The project directory structure is organized as follows:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/bibishan-pandey/FitnessTracker.git
+   git clone https://github.com/bibishan-pandey/fitness-spot.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-    cd FitnessSpot
+    cd fitness-spot
    ```
 
 3. Create and activate a virtual environment (If `venv` is not created, run both commands, otherwise run the second command only):
