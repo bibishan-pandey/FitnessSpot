@@ -2,15 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db import models
 from django.http import HttpRequest
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
 from unfold.decorators import action
 from unfold.forms import UserChangeForm, UserCreationForm, AdminPasswordChangeForm
 
-from auths.models import User
+from auths.models import User, Profile
 
 
+@admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
     # Preprocess content of readonly fields before render
     readonly_preprocess_fields = {
@@ -50,4 +52,18 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
         obj.save()
 
 
-admin.site.register(User, UserAdmin)
+@admin.register(Profile)
+class ProfileAdmin(ModelAdmin):
+    # Preprocess content of readonly fields before render
+    readonly_preprocess_fields = {
+        "model_field_name": "html.unescape",
+        "other_field_name": lambda content: content.strip(),
+    }
+
+    list_display = ('display_avatar', 'user', 'phone', 'gender', 'verified', 'created_at', 'updated_at')
+
+    def display_avatar(self, obj):
+        return format_html('<img src="{}" width="50px" height="50px" />', obj.avatar.url)
+
+    display_avatar.short_description = 'Avatar'
+    display_avatar.allow_tags = True
