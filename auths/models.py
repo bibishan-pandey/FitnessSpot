@@ -3,6 +3,7 @@ import uuid
 import shortuuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
 
@@ -21,6 +22,10 @@ RELATIONSHIP = (
 
 
 def upload_location(instance, filename, upload_type="avatar"):
+    """
+    Upload location for the user profile avatar and cover image.
+    """
+
     # check if the file is an image and has an extension
     if not filename.endswith('.jpg') and not filename.endswith('.png') and not filename.endswith('.jpeg'):
         raise Exception("File is not supported. Please upload an image (jpg, png, jpeg) file.")
@@ -102,3 +107,26 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    Create a user profile when a new user is created.
+
+    Using Django signals, we can create a user profile when a new user is created.
+    """
+    if created:
+        Profile.objects.create(user=instance)
+
+
+def save_user_profile(sender, instance, **kwargs):
+    """
+    Save the user profile when a user is saved.
+
+    Using Django signals, we can save the user profile when a user is saved.
+    """
+    instance.profile.save()
+
+
+post_save.connect(create_user_profile, sender=User)
+post_save.connect(save_user_profile, sender=User)

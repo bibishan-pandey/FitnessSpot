@@ -21,13 +21,15 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     }
 
     # Display submit button in filters
-    list_filter_submit = False
+    list_filter_submit = True
 
     # Custom actions
     actions_list = []  # Displayed above the results list
     actions_row = []  # Displayed in a table row in results list
     actions_detail = []  # Displayed at the top of for in object detail
     actions_submit_line = ['submit_line_action_activate']  # Displayed near save in object detail
+
+    ordering = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'is_superuser', 'date_joined')
 
     formfield_overrides = {
         models.TextField: {
@@ -60,7 +62,12 @@ class ProfileAdmin(ModelAdmin):
         "other_field_name": lambda content: content.strip(),
     }
 
-    list_display = ('display_avatar', 'user', 'phone', 'gender', 'verified', 'created_at', 'updated_at')
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('user', 'verified', 'created_at', 'updated_at')
+    list_display = ('user', 'phone', 'gender', 'verified', 'created_at', 'updated_at', 'display_avatar')
+    sortable_by = ('user', 'verified', 'created_at', 'updated_at')
 
     def display_avatar(self, obj):
         return format_html('<img src="{}" width="50px" height="50px" />', obj.avatar.url)
