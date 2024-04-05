@@ -1,7 +1,7 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
-from core.models import Post, WorkoutType, Workout
+from core.models import Post, WorkoutType, Workout, FriendRequest, Friend, Comment, ReplyComment
 
 
 @admin.register(WorkoutType)
@@ -38,3 +38,43 @@ class PostAdmin(ModelAdmin):
     ordering = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
     list_display = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
     sortable_by = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+
+
+@admin.register(FriendRequest)
+class FriendRequestAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+    list_display = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+    sortable_by = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+
+
+@admin.register(Friend)
+class FriendAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('fid', 'user', 'friend', 'created_at', 'updated_at')
+    list_display = ('fid', 'user', 'friend', 'created_at', 'updated_at')
+    sortable_by = ('fid', 'user', 'friend', 'created_at', 'updated_at')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+    list_display = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+    sortable_by = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+
+
+@admin.register(ReplyComment)
+class ReplyCommentAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+    list_display = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+    sortable_by = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')

@@ -2,8 +2,8 @@ from django.db import models
 from shortuuid.django_fields import ShortUUIDField
 
 from auths.models import User
-from .post import Post
 from core.models.base import BaseModel
+from .post import Post
 
 
 class Comment(BaseModel):
