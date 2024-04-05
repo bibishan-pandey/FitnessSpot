@@ -1,5 +1,6 @@
 import shortuuid
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
 
@@ -28,6 +29,12 @@ class Post(BaseModel):
             uuid_key = shortuuid.uuid()
             self.slug = str(uuid_key.lower()) + "-" + slugify(self.content[:10] if self.content else "")
         super(Post, self).save(*args, **kwargs)
+
+    def thumbnail(self):
+        return mark_safe(
+            '<img src="/media/%s" width="50" height="50" object-fit:"cover" style="border-radius: 5px;" />' %
+            self.image
+        )
 
     def __str__(self):
         if self.content:
