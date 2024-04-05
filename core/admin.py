@@ -1,7 +1,7 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
-from core.models import Post, WorkoutType, Workout, FriendRequest, Friend, Comment, ReplyComment
+from core.models import Post, WorkoutType, Workout, FriendRequest, Friend, Comment, ReplyComment, Notification
 
 
 @admin.register(WorkoutType)
@@ -78,3 +78,16 @@ class ReplyCommentAdmin(admin.ModelAdmin):
     ordering = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
     list_display = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
     sortable_by = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('nid', 'from_user', 'to_user', 'post', 'comment',
+                'notification_type', 'read', 'created_at', 'updated_at')
+    list_display = ('nid', 'from_user', 'to_user', 'post', 'comment',
+                    'notification_type', 'read', 'created_at', 'updated_at')
+    sortable_by = ('nid', 'from_user', 'to_user', 'post', 'comment',
+                   'notification_type', 'read', 'created_at', 'updated_at')
