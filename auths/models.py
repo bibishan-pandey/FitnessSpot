@@ -1,11 +1,11 @@
-import uuid
-
 import shortuuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
 from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
+
+from utils.media_upload import upload_cover_location, upload_avatar_location
 
 GENDER = (
     ("male", "Male"),
@@ -19,29 +19,6 @@ RELATIONSHIP = (
     ("divorced", "Divorced"),
     ("widowed", "Widowed"),
 )
-
-
-def upload_location(instance, filename, upload_type="avatar"):
-    """
-    Upload location for the user profile avatar and cover image.
-    """
-
-    # check if the file is an image and has an extension
-    if not filename.endswith('.jpg') and not filename.endswith('.png') and not filename.endswith('.jpeg'):
-        raise Exception("File is not supported. Please upload an image (jpg, png, jpeg) file.")
-
-    extension = filename.split('.')[-1]
-    filename = f"{instance.user.profile.pid}_{uuid.uuid4()}.{extension}"
-    file_path = f'profiles/{instance.user.username}/{upload_type}/{filename}'
-    return file_path
-
-
-def upload_avatar_location(instance, filename):
-    return upload_location(instance, filename, "avatar")
-
-
-def upload_cover_location(instance, filename):
-    return upload_location(instance, filename, "cover")
 
 
 class User(AbstractUser):
