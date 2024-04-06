@@ -57,3 +57,17 @@ def upload_post_video_location(instance, filename):
     Upload location for the user post video.
     """
     return upload_video_location(instance, filename, "post/video")
+
+
+def upload_community_image_location(instance, filename):
+    """
+    Upload location for the community image.
+    """
+    return upload_image_location(instance, filename, "community/image")
+
+
+def upload_community_video_location(instance, filename):
+    """
+    Upload location for the community video.
+    """
+    return upload_video_location(instance, filename, "community/video")

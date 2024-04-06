@@ -1,7 +1,18 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 
-from core.models import Post, WorkoutType, Workout, FriendRequest, Friend, Comment, ReplyComment, Notification
+from core.models import (
+    Post,
+    Community,
+    CommunityPost,
+    WorkoutType,
+    Workout,
+    FriendRequest,
+    Friend,
+    Comment,
+    ReplyComment,
+    Notification
+)
 
 
 @admin.register(WorkoutType)
@@ -91,3 +102,29 @@ class NotificationAdmin(admin.ModelAdmin):
                     'notification_type', 'read', 'created_at', 'updated_at')
     sortable_by = ('nid', 'from_user', 'to_user', 'post', 'comment',
                    'notification_type', 'read', 'created_at', 'updated_at')
+
+
+@admin.register(Community)
+class CommunityAdmin(admin.ModelAdmin):
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    list_display = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    sortable_by = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+
+
+@admin.register(CommunityPost)
+class CommunityPostAdmin(ModelAdmin):
+    # Preprocess content of readonly fields before render
+    readonly_preprocess_fields = {
+        "model_field_name": "html.unescape",
+        "other_field_name": lambda content: content.strip(),
+    }
+
+    # Display submit button in filters
+    list_filter_submit = True
+
+    ordering = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    list_display = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    sortable_by = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
