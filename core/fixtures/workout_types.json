@@ -1,0 +1,142 @@
+[
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Running",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Weightlifting",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Yoga",
+      "category": "flexibility"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Tai Chi",
+      "category": "balance"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Cycling",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Pilates",
+      "category": "flexibility"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Swimming",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "HIIT",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Boxing",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Rowing",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Jump Rope",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Kickboxing",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Barre",
+      "category": "flexibility"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Circuit Training",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Hiking",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Dancing",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Skiing",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Rock Climbing",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "Martial Arts",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "core.WorkoutType",
+    "fields": {
+      "name": "CrossFit",
+      "category": "strength"
+    }
+  }
+]

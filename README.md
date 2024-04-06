@@ -55,11 +55,24 @@ The project directory structure is organized as follows:
    ```bash
     python manage.py migrate
    ```
-
-6. Run the development server:
+   
+6. Create a superuser:
 
    ```bash
-    python manage.py runserver
+    python manage.py createsuperuser
+   ```
+   
+7. Populate the database with initial data:
+
+   ```bash
+    python manage.py loaddata core/fixtures/workout_types.json
+    python manage.py loaddata core/fixtures/workouts.json
+   ```
+
+8. Run the development server:
+
+   ```bash
+     python manage.py runserver
     ```
    
-7. Open the browser and navigate to `http://localhost:8000/` to access the application.
+9. Open the browser and navigate to `http://localhost:8000/` to access the application.
