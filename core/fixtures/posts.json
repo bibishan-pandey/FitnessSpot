@@ -1,0 +1,122 @@
+[
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post1",
+            "author": 1,
+            "content": "This is post number 1.",
+            "image": "post/image/1.jpg",
+            "workout": 1,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post2",
+            "author": 1,
+            "content": "This is post number 2.",
+            "image": "post/image/2.jpg",
+            "workout": 2,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post3",
+            "author": 1,
+            "content": "This is post number 3.",
+            "image": "post/image/3.jpg",
+            "workout": 3,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post4",
+            "author": 1,
+            "content": "This is post number 4.",
+            "image": "post/image/4.jpg",
+            "workout": 4,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post5",
+            "author": 1,
+            "content": "This is post number 5.",
+            "image": "post/image/5.jpg",
+            "workout": 5,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post6",
+            "author": 1,
+            "content": "This is post number 6.",
+            "image": "post/image/6.jpg",
+            "workout": 6,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post7",
+            "author": 1,
+            "content": "This is post number 7.",
+            "image": "post/image/7.jpg",
+            "workout": 7,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post8",
+            "author": 1,
+            "content": "This is post number 8.",
+            "image": "post/image/8.jpg",
+            "workout": 8,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post9",
+            "author": 1,
+            "content": "This is post number 9.",
+            "image": "post/image/9.jpg",
+            "workout": 9,
+            "visibility": "public",
+            "active": true
+        }
+    },
+    {
+        "model": "core.post",
+        "fields": {
+            "pid": "post10",
+            "author": 1,
+            "content": "This is post number 10.",
+            "image": "post/image/10.jpg",
+            "workout": 10,
+            "visibility": "public",
+            "active": true
+        }
+    }
+]

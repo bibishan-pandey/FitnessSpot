@@ -68,6 +68,18 @@ The project directory structure is organized as follows:
     python manage.py loaddata core/fixtures/workout_types.json
     python manage.py loaddata core/fixtures/workouts.json
    ```
+   When seeding the posts fixture, first run a script to copy images from the `static/images` directory to the `media/post/image` directory:
+   
+   ```bash
+    python scripts/seed_post_data.py
+    ```
+   
+   Then load the posts fixture:
+   
+   ```bash
+    python manage.py loaddata core/fixtures/posts.json
+    ```   
+
 
 8. Run the development server:
 
