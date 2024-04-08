@@ -7,7 +7,7 @@ from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
-from core.forms import WorkoutTypeForm
+from core.forms import WorkoutTypeForm, WorkoutForm
 from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend
 from utils.notification import (send_notification, NOTIFICATION_NEW_LIKE, NOTIFICATION_NEW_COMMENT,
                                 NOTIFICATION_NEW_COMMENT_REPLY, NOTIFICATION_NEW_FRIEND_REQUEST,
@@ -45,6 +45,19 @@ def create_workout_type(request, *args, **kwargs):
             return redirect('core:fitness-feed')
         else:
             messages.error(request, "Failed to create workout type. Please check the form.")
+    return index(request)
+
+
+@login_required
+def create_workout(request):
+    if request.method == 'POST':
+        form = WorkoutForm(request.POST)
+        if form.is_valid():
+            workout = form.save(commit=False)
+            workout.author = request.user
+            workout.save()
+            messages.success(request, 'Workout created successfully.')
+            return redirect('core:fitness-feed')
     return index(request)
 
 

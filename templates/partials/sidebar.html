@@ -30,7 +30,7 @@
                 </svg>
                 <span>Add a workout type </span></a>
             </li>
-            <li><a href="#">
+            <li><a href="#create-workout" uk-toggle>
                 <svg width="800px" height="800px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;stroke:currentColor;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><polygon class="cls-1" points="14.15 22.5 3.41 22.5 3.41 1.5 20.59 1.5 20.59 22.5 14.15 22.5"/><line class="cls-1" x1="6.27" y1="11.05" x2="8.18" y2="11.05"/><line class="cls-1" x1="10.09" y1="11.05" x2="17.73" y2="11.05"/><line class="cls-1" x1="6.27" y1="14.86" x2="8.18" y2="14.86"/><line class="cls-1" x1="10.09" y1="14.86" x2="17.73" y2="14.86"/><line class="cls-1" x1="6.27" y1="18.68" x2="8.18" y2="18.68"/><line class="cls-1" x1="10.09" y1="18.68" x2="17.73" y2="18.68"/><line class="cls-1" x1="7.23" y1="6.27" x2="16.77" y2="6.27"/><line class="cls-1" x1="9.14" y1="4.36" x2="9.14" y2="8.18"/><line class="cls-1" x1="14.86" y1="4.36" x2="14.86" y2="8.18"/></svg>
                 <span>Add your workout routine</span> </a>
             </li>
@@ -102,6 +102,79 @@
             </form>
         </div>
     </div>
+
+    <!-- Create workout modal -->
+    <div id="create-workout" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body rounded-xl shadow-2xl p-0 lg:w-5/12">
+            <button class="uk-modal-close-default p-3 bg-gray-100 rounded-full m-3" type="button" uk-close></button>
+            <div class="border-b px-7 py-5">
+                <div class="lg:text-2xl text-xl font-semibold mb-1">Create Workout</div>
+                <div class="text-base text-gray-600"> Fill in the details of your workout.</div>
+            </div>
+            <form class="p-7 space-y-5" method="POST" action="{% url 'core:create-workout' %}">
+                {% csrf_token %}
+                <div>
+                    <label class="">Name</label>
+                    <input type="text" name="name" placeholder="Workout Name" class="with-border">
+                </div>
+                <div>
+                    <label class="">Start Time</label>
+                    <input type="time" name="start_time" class="with-border">
+                </div>
+                <div>
+                    <label class="">Start Date</label>
+                    <input type="date" name="start_date" class="with-border">
+                </div>
+                <div>
+                    <label class="">Workout Type</label>
+                    <select name="type" class="with-border px-4">
+                        {% for workout_type in workout_types %}
+                            <option value="{{ workout_type.id }}">{{ workout_type.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="">Duration</label>
+                    <input type="text" name="duration" placeholder="Duration" class="with-border">
+                </div>
+                <div>
+                    <label class="">Calories Burned</label>
+                    <input type="number" name="calories_burned" placeholder="Calories Burned" class="with-border">
+                </div>
+                <div>
+                    <label class="">Distance</label>
+                    <input type="number" name="distance" placeholder="Distance" class="with-border">
+                </div>
+                <div>
+                    <label class="">Pace</label>
+                    <input type="number" name="pace" placeholder="Pace" class="with-border">
+                </div>
+                <div>
+                    <label class="">Elevation</label>
+                    <input type="number" name="elevation" placeholder="Elevation" class="with-border">
+                </div>
+                <div>
+                    <label class="">Steps</label>
+                    <input type="number" name="steps" placeholder="Steps" class="with-border">
+                </div>
+                <div>
+                    <label class="">Notes</label>
+                    <textarea name="notes" placeholder="Notes" class="with-border"></textarea>
+                </div>
+                <div>
+                    <label class="">Heart Rate</label>
+                    <input type="number" name="heart_rate" placeholder="Heart Rate" class="with-border">
+                </div>
+                <div class="flex">
+                    <button type="submit"
+                            class="bg-blue-600 font-semibold mx-auto px-10 py-3 rounded-md text-center text-white">
+                        Create Workout
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
 
 </div>

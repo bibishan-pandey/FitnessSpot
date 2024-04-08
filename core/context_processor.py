@@ -1,4 +1,4 @@
-from core.models import FriendRequest, Notification
+from core.models import FriendRequest, Notification, WorkoutType
 
 
 def context_processor(request):
@@ -9,11 +9,16 @@ def context_processor(request):
 
     try:
         notification = Notification.objects.filter(to_user=request.user).order_by('-created_at')
-        print(notification)
     except:
         notification = None
 
+    try:
+        workout_types = WorkoutType.objects.all()
+    except:
+        workout_types = None
+
     return {
         'friend_request': friend_request,
-        'notification': notification
+        'notification': notification,
+        'workout_types': workout_types
     }
