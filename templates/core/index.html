@@ -9,6 +9,14 @@
             <!--  Feeds  -->
             <div class="lg:flex lg:space-x-10">
                 <div class="lg:w-3/4 lg:px-20 space-y-7">
+                    <div class="card lg:mx-0 p-4" uk-toggle="target: #create-post-modal">
+                        <div class="flex space-x-3">
+                            <img src="{{ request.user.profile.avatar.url }}" class="w-10 h-10 rounded-full">
+                            <input placeholder="Hey {{ request.user.username }}, show off your progress today"
+                                   class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full">
+                        </div>
+                    </div>
+
                     <div class="post-div" id="post-list">
                         {% for p in posts %}
                             <div class="card lg:mx-0 uk-animation-slide-bottom-small mb-3">
@@ -82,7 +90,7 @@
 
                                 <div uk-lightbox>
 
-                                    {% if p.title %}
+                                    {% if p.content %}
                                         <div class="p-5 pt-0 border-b dark:border-gray-700 pb-3">
                                             {{ p.content|truncatechars:130 }}
                                             {% if p.content_len_count > 130 %}
@@ -178,7 +186,7 @@
                                 </div>
 
                                 <div class="p-4 space-y-3">
-                                    <div class="flex space-x-4 lg:font-bold">
+                                    <div class="flex space-x-4 lg:font-bold border-b dark:border-gray-700 pb-3">
                                         <a class="flex items-center space-x-2  text-blue-500" style="cursor: pointer;">
                                             <div class="p-2 rounded-full like-btn{{ p.id }} {% if request.user in p.likes.all %}text-blue-500 {% else %} text-black {% endif %} "
                                                  id="like-btn" data-like-btn="{{ p.id }}">
@@ -278,6 +286,103 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Create post modal -->
+    <div id="create-post-modal" class="create-post is-story uk-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical rounded-lg p-0 lg:w-5/12 relative shadow-2xl uk-animation-slide-bottom-small">
+            <form id="post-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="text-center py-3 border-b">
+                    <h3 class="text-lg font-semibold"> Share your day </h3>
+                    <button class="uk-modal-close-default bg-gray-100 rounded-full p-2.5 right-2" type="button" uk-close
+                            uk-tooltip="title: Close ; pos: bottom ;offset:7"></button>
+                </div>
+                <div class="flex flex-1 items-start space-x-4 p-5">
+                    <img src="{{ request.user.profile.avatar.url }}"
+                         class="bg-gray-200 border border-white rounded-full w-11 h-11">
+                    <div class="flex-1 pt-2">
+                        <textarea id="post-caption" name="post-caption"
+                                  class="uk-textare text-black shadow-none focus:shadow-none text-xl font-medium resize-none"
+                                  rows="5"
+                                  placeholder="Hey {{ request.user.username }}, show off your progress today"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex flex-1 p-5 w-100">
+                    <div class="flex-1 pt-2">
+                        <img src="https://joadre.com/wp-content/uploads/2019/02/no-image.jpg"
+                             id="preview_post_thumbnail"
+                             style="display: none; width: 100%; height: 200px;object-fit: cover; border-radius: 10px;" alt=""
+                             for="post-thumbnail">
+                    </div>
+                </div>
+
+                <div class="flex flex-1 items-start space-y-4 px-3 py-2">
+                    <select class="selectpicker story w-full" name="workout" id="workout">
+                        <option>Select Workout</option>
+                        {% for w in workouts %}
+                            <option value="{{ w.id }}">{{ w.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <script>
+                    var loadFile = function (event) {
+                        var output2 = document.getElementById("preview_post_thumbnail");
+                        output2.src = URL.createObjectURL(event.target.files[0]);
+                        output2.onload = function () {
+                            URL.revokeObjectURL(output2.src); // free memory
+                        };
+                        output2.style.display = "block";
+                    };
+                </script>
+                <div class="absolute -bottom-20 space-x-4 w-full">
+                    <div class="flex bg-white border border-purple-100 rounded-md p-2 shadow-md items-center">
+                        <div class="lg:block hidden ml-1"> Want something extra?</div>
+                        <div class="flex flex-1 items-center lg:justify-end justify-center space-x-2">
+
+                            <label for="post-thumbnail">
+                                <svg class="bg-blue-100 h-9 p-1.5 rounded-full text-blue-600 w-9 cursor-pointer"
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </label>
+                            <input onchange="loadFile(event)" name="post-thumbnail" class="d-none " type="file"
+                                   id="post-thumbnail">
+                            <label for="">
+                                <svg class="text-red-600 h-9 p-1.5 rounded-full bg-red-100 w-9 cursor-pointer"
+                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                                </svg>
+                            </label>
+                            <svg class="hover:bg-gray-200 h-9 p-1.5 rounded-full w-9 cursor-pointer" id="veiw-more"
+                                 uk-toggle="target: #veiw-more; animation: uk-animation-fade" fill="none"
+                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                            </svg>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center w-full justify-between border-t p-3">
+                    <select class="selectpicker mt-2 story" name="visibility" id="visibility">
+                        <option value="public">Public</option>
+                        <option value="friends">Friends</option>
+                        <option value="private">Private</option>
+                    </select>
+                    <button type="submit" id="share-post"
+                            class="bg-blue-600 flex h-9 items-center justify-center rounded-md text-white px-5 font-medium">
+                        Share
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 {% endblock %}
