@@ -1,11 +1,13 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
+from core.forms import WorkoutTypeForm
 from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend
 from utils.notification import (send_notification, NOTIFICATION_NEW_LIKE, NOTIFICATION_NEW_COMMENT,
                                 NOTIFICATION_NEW_COMMENT_REPLY, NOTIFICATION_NEW_FRIEND_REQUEST,
@@ -31,6 +33,19 @@ def index(request):
     }
 
     return render(request, 'core/index.html', context)
+
+
+@login_required
+def create_workout_type(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = WorkoutTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Workout type created successfully.")
+            return redirect('core:fitness-feed')
+        else:
+            messages.error(request, "Failed to create workout type. Please check the form.")
+    return index(request)
 
 
 @login_required

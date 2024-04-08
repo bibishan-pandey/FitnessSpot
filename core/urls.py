@@ -7,6 +7,7 @@ app_name = 'core'
 urlpatterns = [
     path('', views.index, name='fitness-feed'),
     path("posts/<slug:slug>/", views.post_detail, name="post-detail"),
+    path('create-workout-type/', views.create_workout_type, name='create-workout-type'),
 
     # Ajax endpoints
     path('create-post/', views.create_post, name='create-post'),
