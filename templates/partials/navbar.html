@@ -415,13 +415,13 @@
 
 
                     <a href="#">
-                        <img src="{{ request.user.profile.image.url }}" class="is_avatar" alt="">
+                        <img src="{{ request.user.profile.avatar.url }}" class="is_avatar" alt="">
                     </a>
                     <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
 
                         <a href="" class="user">
                             <div class="user_avatar">
-                                <img src="{{ request.user.profile.image.url }}" alt="">
+                                <img class="h-11 w-11" src="{{ request.user.profile.avatar.url }}" alt="">
                             </div>
 
                             <div class="user_name">
