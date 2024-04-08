@@ -7,6 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
 from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend
+from utils.notification import (send_notification, NOTIFICATION_NEW_LIKE, NOTIFICATION_NEW_COMMENT,
+                                NOTIFICATION_NEW_COMMENT_REPLY, NOTIFICATION_NEW_FRIEND_REQUEST,
+                                NOTIFICATION_FRIEND_REQUEST_ACCEPTED)
 from utils.posts import get_posts_with_comments
 
 
@@ -105,6 +108,16 @@ def like_post(request):
         post.likes.add(user)
         is_liked = True
 
+        if request.user != post.author:
+            # Send a notification to the post author
+            send_notification(
+                from_user=user,
+                to_user=post.author,
+                post=post,
+                comment=None,
+                notification_type=NOTIFICATION_NEW_LIKE
+            )
+
     likes_count = post.likes.count()
 
     data = {
@@ -138,6 +151,16 @@ def comment_post(request):
         comment=comment,
         user=request.user
     )
+
+    if new_comment.user != post.author:
+        # Send a notification to the post author
+        send_notification(
+            from_user=new_comment.user,
+            to_user=post.author,
+            post=post,
+            comment=new_comment,
+            notification_type=NOTIFICATION_NEW_COMMENT
+        )
 
     data = {
         'comment': new_comment.comment,
@@ -174,6 +197,16 @@ def reply_comment(request):
         user=request.user
     )
 
+    if comment.user != request.user:
+        # Send a notification to the post author
+        send_notification(
+            from_user=comment.user,
+            to_user=request.user,
+            post=comment.post,
+            comment=comment,
+            notification_type=NOTIFICATION_NEW_COMMENT_REPLY
+        )
+
     data = {
         'reply': new_reply.reply,
         "profile_image": new_reply.user.profile.avatar.url,
@@ -203,6 +236,15 @@ def add_friend(request):
     except FriendRequest.DoesNotExist:
         friend_request = FriendRequest(from_user=from_user, to_user=to_user)
         friend_request.save()
+
+        # Send a notification to the sender
+        send_notification(
+            from_user=from_user,
+            to_user=to_user,
+            post=None,
+            comment=None,
+            notification_type=NOTIFICATION_NEW_FRIEND_REQUEST
+        )
         return JsonResponse({'is_friend_request_sent': True})
 
 
@@ -221,6 +263,13 @@ def accept_friend(request):
     # Delete the friend request
     friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
     friend_request.delete()
+
+    send_notification(
+        from_user=from_user,
+        to_user=to_user,
+        post=None,
+        comment=None,
+        notification_type=NOTIFICATION_FRIEND_REQUEST_ACCEPTED)
 
     return JsonResponse({
         "is_friend": True

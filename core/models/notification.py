@@ -7,13 +7,11 @@ from .comment import Comment
 from .post import Post
 
 NOTIFICATION_TYPE = (
-    ('new_like', 'New Like'),
-    ('new_comment', 'New Comment'),
-    ('comment_like', 'Comment Like'),
-    ('comment_reply', 'Comment Reply'),
-    ('friend_request', 'Friend Request'),
-    ('friend_request_accept', 'Friend Request Accept'),
-    ('new_follower', 'New Follower'),
+    ("new_like", "New like"),
+    ("new_comment", "New comment"),
+    ("new_comment_reply", "New comment reply"),
+    ("new_friend_request", "New friend request"),
+    ("friend_request_accepted", "Friend request accepted"),
 )
 
 
@@ -26,8 +24,8 @@ class Notification(BaseModel):
     notification_type = models.CharField(max_length=30, choices=NOTIFICATION_TYPE)
     read = models.BooleanField(default=False, null=True, blank=True)
 
-    class Meta:
-        unique_together = ['from_user', 'to_user']
+    # class Meta:
+    #     unique_together = ['from_user', 'to_user']
 
     def __str__(self):
         if self.from_user and self.to_user:

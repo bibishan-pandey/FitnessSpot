@@ -83,11 +83,11 @@
                                     <li class="mt-3 mb-4 shadow p-3">
                                         <a href="{% url 'auths:fitness-others-profile' f.from_user.username %}">
                                             <div class="drop_avatar border border-blue-200">
-                                                <img src="{{ f.from_user.profile.avatar.url }}" alt="">
+                                                <img src="{{ f.from_user.profile.avatar.url }}" class="w-12 h-12 bg-cover" alt="">
                                             </div>
                                             <span class="drop_icon bg-gradient-primary">
-                                                        <i class="icon-feather-thumbs-up"></i>
-                                                    </span>
+                                                <i class="icon-feather-thumbs-up"></i>
+                                            </span>
                                             <div class="drop_text">
                                                 <p><strong>{{ f.from_user.username }}</strong> send you a friend
                                                     request. </p>
@@ -147,57 +147,52 @@
                                                 <img src="{{ n.sender.profile.image.url }}" alt="">
                                             </div>
                                             <span class="drop_icon bg-gradient-primary">
-
-                                                        {% if n.notification_type == "New Like" %}
-                                                            <i class="icon-feather-thumbs-up"></i>{% endif %}
-                                                {% if n.notification_type == "New Comment" %}
-                                                    <i class="icon-feather-message-square"></i>{% endif %}
-                                                {% if n.notification_type == "Comment Liked" %}
-                                                    <i class="icon-feather-thumbs-up"></i>{% endif %}
-                                                {% if n.notification_type == "Comment Replied" %}
-                                                    <i class="icon-feather-message-square"></i>{% endif %}
-                                                {% if n.notification_type == "New Follower" %}
-                                                    <i class="icon-feather-user-plus"></i>{% endif %}
-                                                {% if n.notification_type == "New Follower" %}
-                                                    <i class="icon-feather-user-plus"></i>{% endif %}
-                                                {% if n.notification_type == "Friend Request Accepted" %}
-                                                    <i class="icon-feather-check-circle"></i>{% endif %}
-                                                {% if n.notification_type == "Friend Request" %}
-                                                    <i class="icon-feather-user-plus"></i>{% endif %}
-
-                                                    </span>
+                                                {% if n.notification_type == "new_like" %}
+                                                    <i class="icon-feather-thumbs-up"></i>
+                                                {% endif %}
+                                                {% if n.notification_type == "new_comment" %}
+                                                    <i class="icon-feather-message-square"></i>
+                                                {% endif %}
+                                                {% if n.notification_type == "new_comment_reply" %}
+                                                    <i class="icon-feather-message-square"></i>
+                                                {% endif %}
+                                                {% if n.notification_type == "friend_request_accepted" %}
+                                                    <i class="icon-feather-check-circle"></i>
+                                                {% endif %}
+                                                {% if n.notification_type == "new_friend_request" %}
+                                                    <i class="icon-feather-user-plus"></i>
+                                                {% endif %}
+                                            </span>
                                             <div class="drop_text">
                                                 <p>
-                                                    <strong>{{ n.sender.profile.full_name|title }}</strong>
+                                                    <strong>{{ n.from_user.username }}</strong>
+                                                    {% if n.notification_type == "new_like" %}
+                                                        liked your post
+                                                    {% endif %}
 
-                                                    {% if n.notification_type == "New Like" %} Liked your
-                                                        post {% endif %}
+                                                    {% if n.notification_type == "new_comment" %}
+                                                        commented on your post
+                                                    {% endif %}
 
-                                                    {% if n.notification_type == "New Comment" %} Commented on your
-                                                        post {% endif %}
+                                                    {% if n.notification_type == "new_comment_reply" %}
+                                                        replied on your comment
+                                                    {% endif %}
 
-                                                    {% if n.notification_type == "Comment Liked" %} Liked your comment
-                                                        on {% endif %}
+                                                    {% if n.notification_type == "friend_request_accepted" %}
+                                                        accepted your friend request
+                                                    {% endif %}
 
-                                                    {% if n.notification_type == "Comment Replied" %} Replied your
-                                                        comment on {% endif %}
-
-                                                    {% if n.notification_type == "New Follower" %} Just Followed
-                                                        You {% endif %}
-
-                                                    {% if n.notification_type == "Friend Request Accepted" %} Accepted
-                                                        Your Friend Request {% endif %}
-
-                                                    {% if n.notification_type == "Friend Request" %} Sent you a friend
-                                                        Request  {% endif %}
+                                                    {% if n.notification_type == "new_friend_request" %}
+                                                        sent you a friend request
+                                                    {% endif %}
 
 
-                                                    {% if n.post %}
-                                                        <span class="text-link">{{ n.post.title }} </span>
+                                                    {% if n.post and n.post.content %}
+                                                        <span class="text-link">{{ n.post.content }} </span>
                                                     {% endif %}
 
                                                 </p>
-                                                <time><small>{{ n.date|timesince }} ago</small></time>
+                                                <time><small>{{ n.created_at|timesince }} ago</small></time>
                                             </div>
                                         </a>
                                     </li>
@@ -301,7 +296,7 @@
                             </div>
 
                             <div class="user_name">
-                                <div> My Profile </div>
+                                <div> My Profile</div>
                                 <span> @{{ request.user.username }}</span>
                             </div>
                         </a>
