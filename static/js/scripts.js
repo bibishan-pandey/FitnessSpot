@@ -244,7 +244,7 @@ $(document).ready(function () {
                     <div class="w-full">\
                         <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12 dark:bg-gray-800 dark:text-gray-100 flex items-center w-full">\
                             <p class="leading-6 flex-grow">' + res.data.comment + '</p>\
-                                <button class="ml-auto text-xs ml-3 mr-3" id="delete-comment" data-delete-comment="' + res.data.comment_id + '"> <i class="fas fa-trash text-red-500"></i> </button>\
+                                <button class="ml-auto text-xs ml-3 mr-3 p-4 hover:text-red-500" id="delete-comment" data-delete-comment="' + res.data.comment_id + '"> <i class="fas fa-trash"></i> </button>\
                         </div>\
                         <div class="text-sm flex items-center space-x-3 mt-2 ml-5">\
                             <a id="like-comment-btn" data-like-comment="' + res.data.comment_id + '" class="like-comment' + res.data.comment_id + ' text-red-500" style="color: gray;" > <i id="comment-icon' + res.data.comment_id + '" class=" fas fa-heart  "></i></a> <small><span class="" id="comment-likes-count' + res.data.comment_id + '">0</span></small>\
@@ -271,6 +271,26 @@ $(document).ready(function () {
                 $("#comment-div" + id).prepend(newComment);
                 $("#comment-count" + id).text(res.data.comment_count);
                 $("#comment-input" + id).val("")
+            }
+        })
+    })
+
+    // Delete a comment
+    $(document).on("click", "#delete-comment", function (event) {
+        event.preventDefault();
+        let btn_val = $(this).attr("data-delete-comment")
+        $.ajax({
+            url: "/delete-comment/",
+            dataType: "json",
+            data: {
+                "id": btn_val
+            },
+            success: function (response) {
+                console.log(response);
+                $("#comment-div" + btn_val).remove();
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
             }
         })
     })

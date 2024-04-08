@@ -7,34 +7,12 @@ from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 from core.models import Post, Workout, Comment, Friend
+from utils.posts import get_posts_with_comments
 
 
 @login_required
 def index(request):
-    # Get the IDs of the current users set in the user column of the friends table
-    user_friends_ids = Friend.objects.filter(user=request.user).values_list('friend_id', flat=True)
-
-    # Get the IDs of the current users set in the friend columns of the friends table
-    user_users_ids = Friend.objects.filter(friend=request.user).values_list('friend_id', flat=True)
-
-    friends = user_friends_ids | user_users_ids
-
-    posts = (Post.objects
-             .filter(
-        Q(author=request.user) |  # Posts by the user
-        Q(visibility="public") |  # Public posts
-        (Q(visibility="friends") & Q(author__id__in=friends)),  # Posts visible to friends
-        active=True
-    ).order_by('-created_at'))
-
-    # Fetch comments for each post separately
-    post_comments = {}
-    for post in posts:
-        post_comments[post.id] = Comment.objects.filter(post=post)
-
-    # Annotate posts with prefetched comments
-    for post in posts:
-        post.comments = post_comments.get(post.id, [])
+    posts = get_posts_with_comments(request)
 
     workouts = Workout.objects.filter(author=request.user)
 
@@ -50,6 +28,18 @@ def index(request):
     }
 
     return render(request, 'core/index.html', context)
+
+
+@login_required
+def post_detail(request, slug):
+    post = get_posts_with_comments(request, slug=slug)
+    if not post:
+        return JsonResponse({'error': 'Post not found'}, status=404)
+
+    context = {
+        "post": post[0]
+    }
+    return render(request, "core/post-detail.html", context)
 
 
 @csrf_exempt
@@ -158,3 +148,14 @@ def comment_post(request):
         "comment_count": comment_count + int(1)
     }
     return JsonResponse({"data": data})
+
+
+@csrf_exempt
+@login_required
+def delete_comment(request):
+    _id = request.GET.get('id')
+    comment = get_object_or_404(Comment, id=_id)
+    if comment.user.id == request.user.id:
+        comment.delete()
+        return JsonResponse({"data": "Comment deleted successfully"})
+    return JsonResponse({"error": "Unauthorized"}, status=401)
