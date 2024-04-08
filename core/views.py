@@ -3,17 +3,38 @@ from django.core import serializers
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
-from core.models import Post, Workout
+from core.models import Post, Workout, Comment, Friend
 
 
 @login_required
 def index(request):
-    # TODO: Fix for friends posts
+    # Get the IDs of the current users set in the user column of the friends table
+    user_friends_ids = Friend.objects.filter(user=request.user).values_list('friend_id', flat=True)
+
+    # Get the IDs of the current users set in the friend columns of the friends table
+    user_users_ids = Friend.objects.filter(friend=request.user).values_list('friend_id', flat=True)
+
+    friends = user_friends_ids | user_users_ids
+
     posts = (Post.objects
-             .filter(Q(visibility="public") | Q(author__friends__user=request.user), active=True)
-             .order_by('-created_at'))
+             .filter(
+        Q(author=request.user) |  # Posts by the user
+        Q(visibility="public") |  # Public posts
+        (Q(visibility="friends") & Q(author__id__in=friends)),  # Posts visible to friends
+        active=True
+    ).order_by('-created_at'))
+
+    # Fetch comments for each post separately
+    post_comments = {}
+    for post in posts:
+        post_comments[post.id] = Comment.objects.filter(post=post)
+
+    # Annotate posts with prefetched comments
+    for post in posts:
+        post.comments = post_comments.get(post.id, [])
 
     workouts = Workout.objects.filter(author=request.user)
 
@@ -112,3 +133,28 @@ def delete_post(request):
         post.delete()
         return JsonResponse({"data": "Post deleted successfully"})
     return JsonResponse({"error": "Unauthorized"}, status=401)
+
+
+@csrf_exempt
+@login_required
+def comment_post(request):
+    _id = request.GET.get('id')
+    comment = request.GET.get('comment')
+    post = Post.objects.get(id=_id)
+    comment_count = Comment.objects.filter(post=post).count()
+
+    new_comment = Comment.objects.create(
+        post=post,
+        comment=comment,
+        user=request.user
+    )
+
+    data = {
+        'comment': new_comment.comment,
+        "profile_image": new_comment.user.profile.avatar.url,
+        "date": timesince(new_comment.updated_at),
+        "comment_id": new_comment.id,
+        "post_id": new_comment.post.id,
+        "comment_count": comment_count + int(1)
+    }
+    return JsonResponse({"data": data})
