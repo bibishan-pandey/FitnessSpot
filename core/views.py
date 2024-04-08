@@ -293,8 +293,8 @@ def accept_friend(request):
     friend_request.delete()
 
     send_notification(
-        from_user=from_user,
-        to_user=to_user,
+        from_user=to_user,
+        to_user=from_user,
         post=None,
         comment=None,
         notification_type=NOTIFICATION_FRIEND_REQUEST_ACCEPTED)
