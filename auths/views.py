@@ -103,6 +103,8 @@ def my_profile(request):
 @login_required
 def others_profile(request, username):
     other_user = User.objects.get(username=username)
+    if request.user == other_user:
+        return redirect('auths:fitness-profile')
 
     # Get the IDs of friends for the current user
     user_friends_ids = Friend.objects.filter(user=request.user, friend=other_user).values_list('friend_id', flat=True)
