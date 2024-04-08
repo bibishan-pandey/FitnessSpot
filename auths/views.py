@@ -105,10 +105,10 @@ def others_profile(request, username):
     other_user = User.objects.get(username=username)
 
     # Get the IDs of friends for the current user
-    user_friends_ids = Friend.objects.filter(user=other_user).values_list('friend_id', flat=True)
+    user_friends_ids = Friend.objects.filter(user=request.user, friend=other_user).values_list('friend_id', flat=True)
 
     # Get the IDs of users who have the current user as their friend
-    user_users_ids = Friend.objects.filter(user=other_user).values_list('user_id', flat=True)
+    user_users_ids = Friend.objects.filter(user=other_user, friend=request.user).values_list('user_id', flat=True)
 
     # Combine the two lists to get all friends both ways
     friends_ids = set(user_friends_ids) | set(user_users_ids)
