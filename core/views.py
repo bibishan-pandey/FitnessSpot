@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from core.models import Post, Workout
@@ -16,6 +16,12 @@ def index(request):
              .order_by('-created_at'))
 
     workouts = Workout.objects.filter(author=request.user)
+
+    # Add others count to each post to show the number of other people who liked the post
+    # And for the first person who liked the post, we don't want to show the count instead
+    # we show the name of that person
+    # for post in posts:
+    #     post.others_count = post.likes.all().count() - 1 if post.likes.all().count() > 1 else 0
 
     context = {
         'posts': posts,
@@ -72,3 +78,26 @@ def create_post(request):
         return JsonResponse({'data': serialized_post})
 
     return JsonResponse({'error': 'Unprocessable Entity'}, status=422)
+
+
+@csrf_exempt
+@login_required
+def like_post(request):
+    _id = request.GET.get('id')
+    post = get_object_or_404(Post, id=_id)
+    user = request.user
+
+    if user in post.likes.all():
+        post.likes.remove(user)
+        is_liked = False
+    else:
+        post.likes.add(user)
+        is_liked = True
+
+    likes_count = post.likes.count()
+
+    data = {
+        "is_liked": is_liked,
+        'likes': likes_count
+    }
+    return JsonResponse({"data": data})

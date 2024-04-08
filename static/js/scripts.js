@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    // Add a new post
     $('#post-form').submit(function (e) {
         e.preventDefault();
 
@@ -166,5 +168,29 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Like a post
+    $(document).on("click", "#like-btn", function () {
+        let btn_val = $(this).attr("data-like-btn")
+        $.ajax({
+            url: "/like-post/",
+            dataType: "json",
+            data: {
+                "id": btn_val
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.data.is_liked) {
+                    console.log("Liked");
+                    $(".like-btn" + btn_val).addClass("text-blue-500").removeClass("text-black");
+                } else {
+                    console.log("Unliked");
+                    $(".like-btn" + btn_val).addClass("text-black").removeClass("text-blue-500");
+                }
+
+                $("#like-count" + btn_val).text(response.data.likes);
+            }
+        })
+    })
 });
 
