@@ -6,7 +6,7 @@ from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
-from core.models import Post, Workout, Comment, ReplyComment, FriendRequest
+from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend
 from utils.posts import get_posts_with_comments
 
 
@@ -204,3 +204,24 @@ def add_friend(request):
         friend_request = FriendRequest(from_user=from_user, to_user=to_user)
         friend_request.save()
         return JsonResponse({'is_friend_request_sent': True})
+
+
+@csrf_exempt
+@login_required
+def accept_friend(request):
+    _id = request.GET.get('id')
+
+    to_user = request.user
+    from_user = User.objects.get(id=_id)
+
+    # Create friend relationship in the Friend model
+    Friend.objects.create(user=to_user, friend=from_user)
+    Friend.objects.create(user=from_user, friend=to_user)
+
+    # Delete the friend request
+    friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
+    friend_request.delete()
+
+    return JsonResponse({
+        "is_friend": True
+    })
