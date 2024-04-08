@@ -64,15 +64,8 @@
                                 </a>
 
                             {% else %}
-                                {% if is_friend_request_sent == True and current_user.username %}
-                                    <a id="confirm-friend" data-friend-id="{{ profile.user.id }}"
-                                       class="flex items-center justify-center h-10 px-5 rounded-md bg-green-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
-                                    <span style="cursor: pointer;" class="text-white" id="friend-text"><i
-                                            class="fas fa-user-plus"></i> Confirm Request </span>
-                                    </a>
-
-                                {% elif is_friend_request_sent == True and other_user.user.id != current_user.id %}
-                                    <a id="cancel-friend" data-friend-id="{{ profile.user.id }}"
+                                {% if is_friend_request_sent == True %}
+                                    <a id="add-friend" data-friend-id="{{ profile.user.id }}"
                                        class="flex items-center justify-center h-10 px-5 rounded-md bg-red-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
                                     <span style="cursor: pointer;" class="text-white" id="friend-text"><i
                                             class="fas fa-user-minus"></i> Cancel Request </span>

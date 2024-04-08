@@ -5,7 +5,8 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
-from core.models import Post, Workout, Comment, ReplyComment
+from auths.models import User
+from core.models import Post, Workout, Comment, ReplyComment, FriendRequest
 from utils.posts import get_posts_with_comments
 
 
@@ -181,3 +182,25 @@ def reply_comment(request):
         "comment_id": new_reply.comment.id
     }
     return JsonResponse({"data": data})
+
+
+@csrf_exempt
+@login_required
+def add_friend(request):
+    from_user = request.user
+    receiver_id = request.GET.get('id')
+
+    if from_user.id == int(receiver_id):
+        return JsonResponse({'error': 'You cannot send a friend request to yourself.'})
+
+    to_user = User.objects.get(id=receiver_id)
+
+    try:
+        friend_request = FriendRequest.objects.get(from_user=from_user, to_user=to_user)
+        if friend_request:
+            friend_request.delete()
+        return JsonResponse({'is_friend_request_sent': False})
+    except FriendRequest.DoesNotExist:
+        friend_request = FriendRequest(from_user=from_user, to_user=to_user)
+        friend_request.save()
+        return JsonResponse({'is_friend_request_sent': True})
