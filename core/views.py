@@ -101,3 +101,14 @@ def like_post(request):
         'likes': likes_count
     }
     return JsonResponse({"data": data})
+
+
+@csrf_exempt
+@login_required
+def delete_post(request):
+    _id = request.GET.get('id')
+    post = get_object_or_404(Post, id=_id)
+    if post.author.id == request.user.id:
+        post.delete()
+        return JsonResponse({"data": "Post deleted successfully"})
+    return JsonResponse({"error": "Unauthorized"}, status=401)

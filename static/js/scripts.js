@@ -189,6 +189,29 @@ $(document).ready(function () {
                 }
 
                 $("#like-count" + btn_val).text(response.data.likes);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        })
+    })
+
+    // Delete a post
+    $(document).on("click", "#delete-post", function (event) {
+        event.preventDefault();
+        let btn_val = $(this).attr("data-delete-btn")
+        $.ajax({
+            url: "/delete-post/",
+            dataType: "json",
+            data: {
+                "id": btn_val
+            },
+            success: function (response) {
+                console.log(response);
+                $("#post" + btn_val).remove();
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
             }
         })
     })
