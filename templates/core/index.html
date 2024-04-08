@@ -82,37 +82,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <a href="#"> <i
-                                                    class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i>
-                                            </a>
-                                            <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
-                                                 uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
+                                        {% if request.user.username == p.author.username %}
+                                            <div>
+                                                <a href="#"> <i
+                                                        class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 dark:hover:bg-gray-700"></i>
+                                                </a>
+                                                <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
+                                                     uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
 
-                                                <ul class="space-y-1">
-                                                    <li>
-                                                        <a href="#"
-                                                           class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                                            <i class="uil-share-alt mr-1"></i> Share
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                           class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                                            <i class="uil-favorite mr-1"></i> Add favorites
-                                                        </a>
-                                                    </li>
-                                                    {% if request.user.username == p.author.username %}
+                                                    <ul class="space-y-1">
+
                                                         <li>
                                                             <a href="#"
                                                                class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
                                                                 <i class="uil-edit-alt mr-1"></i> Edit Post
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"
-                                                               class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                                                <i class="uil-comment-slash mr-1"></i> Disable comments
                                                             </a>
                                                         </li>
                                                         <li>
@@ -126,11 +109,12 @@
                                                                 <i class="uil-trash-alt mr-1"></i> Delete
                                                             </a>
                                                         </li>
-                                                    {% endif %}
-                                                </ul>
 
+                                                    </ul>
+
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
                                     </div>
 
 
@@ -255,20 +239,10 @@
                                                               clip-rule="evenodd"/>
                                                     </svg>
                                                 </div>
-                                                <div><b><spankabitashrestha/
+                                                <div><b><span
                                                         id="comment-count{{ p.id }}">{{ p.comments_count }}</span></b>
                                                     Comment
                                                 </div>
-                                            </a>
-                                            <a href="#" class="flex items-center space-x-2 flex-1 justify-end">
-                                                <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                         fill="currentColor"
-                                                         width="22" height="22" class="dark:text-gray-100">
-                                                        <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
-                                                    </svg>
-                                                </div>
-                                                <div>Share</div>
                                             </a>
                                         </div>
 

@@ -76,22 +76,7 @@ $(document).ready(function () {
                                         <ul class="space-y-1">\
                                             <li>\
                                                 <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">\
-                                                    <i class="uil-share-alt mr-1"></i> Share\
-                                                </a>\
-                                            </li>\
-                                            <li>\
-                                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">\
                                                     <i class="uil-edit-alt mr-1"></i>  Edit Post \
-                                                </a>\
-                                            </li>\
-                                            <li>\
-                                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">\
-                                                    <i class="uil-comment-slash mr-1"></i>   Disable comments\
-                                                </a>\
-                                            </li>\
-                                            <li>\
-                                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">\
-                                                    <i class="uil-favorite mr-1"></i>  Add favorites \
                                                 </a>\
                                             </li>\
                                             <li>\
@@ -129,14 +114,6 @@ $(document).ready(function () {
                                             </svg>\
                                         </div>\
                                         <div> <b><span id="comment-count' + postData.pk + '">0</span></b> Comment</div>\
-                                    </a>\
-                                    <a href="#" class="flex items-center space-x-2 flex-1 justify-end">\
-                                        <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">\
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22" height="22" class="dark:text-gray-100">\
-                                                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />\
-                                            </svg>\
-                                        </div>\
-                                        <div> Share</div>\
                                     </a>\
                                 </div>\
                                 <div class="flex items-center space-x-3 pt-2">\
