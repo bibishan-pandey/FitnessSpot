@@ -225,3 +225,42 @@ def accept_friend(request):
     return JsonResponse({
         "is_friend": True
     })
+
+
+@csrf_exempt
+@login_required
+def reject_friend(request):
+    _id = request.GET.get('id')
+
+    to_user = request.user
+    from_user = User.objects.get(id=_id)
+
+    # Delete the friend request
+    friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
+    friend_request.delete()
+
+    return JsonResponse({
+        "is_friend": False
+    })
+
+
+@csrf_exempt
+@login_required
+def remove_friend(request):
+    _id = request.GET.get('id')
+
+    to_user = request.user
+    from_user = User.objects.get(id=_id)
+
+    # Delete the friend relationship in the Friend model
+    friend = Friend.objects.filter(user=to_user, friend=from_user).first()
+    if friend:
+        friend.delete()
+
+    friend = Friend.objects.filter(user=from_user, friend=to_user).first()
+    if friend:
+        friend.delete()
+
+    return JsonResponse({
+        "is_friend": False
+    })

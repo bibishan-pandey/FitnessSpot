@@ -16,6 +16,7 @@ urlpatterns = [
     path('delete-comment/', views.delete_comment, name='delete-comment'),
     path('reply-comment/', views.reply_comment, name='reply-comment'),
     path('add-friend/', views.add_friend, name='add-friend'),
-    # path('remove-friend/', views.remove_friend, name='remove-friend'),
+    path('remove-friend/', views.remove_friend, name='remove-friend'),
     path('accept-friend/', views.accept_friend, name='accept-friend'),
+    path('reject-friend/', views.reject_friend, name='reject-friend'),
 ]

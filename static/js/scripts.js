@@ -379,5 +379,45 @@ $(document).ready(function () {
             }
         })
     })
+
+    // Reject Friend Request
+    $(document).on("click", "#reject-friend-request", function () {
+        let id = $(this).attr("data-request-id")
+        console.log(id);
+
+        $.ajax({
+            url: "/reject-friend/",
+            dataType: "json",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                console.log(response);
+                $(".accept-friend-request-hide" + id).hide()
+                $(".reject-friend-request" + id).html("<i class='fa-solid fa-xmark'></i> Friend Request Rejected")
+                $(".reject-friend-request" + id).addClass("text-white")
+            }
+        })
+    })
+
+    // UnFriend User
+    $(document).on("click", "#unfriend", function () {
+        let id = $(this).attr("data-friend-id")
+        console.log(id);
+
+        $.ajax({
+            url: "/remove-friend/",
+            dataType: "json",
+            data: {
+                "id": id
+            },
+            success: function (response) {
+                console.log(response);
+                $("#unfriend-text").html("<i class='fas fa-check-circle'></i> Friend Removed ")
+                $(".unfriend" + id).addClass("bg-blue-600")
+                $(".unfriend" + id).removeClass("bg-red-600")
+            }
+        })
+    })
 });
 
