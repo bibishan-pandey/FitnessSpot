@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from core.models import Friend, Post, Comment
+from core.models import Friend, Post, Comment, ReplyComment
 
 
 def get_posts_with_comments(request, *args, **kwargs):
@@ -20,8 +20,19 @@ def get_posts_with_comments(request, *args, **kwargs):
     # Fetch comments for each post separately
     post_comments = {}
     for post in posts:
-        post_comments[post.id] = Comment.objects.filter(post=post)
-    # Annotate posts with prefetched comments
+        comments_qs = Comment.objects.filter(post=post)
+        post_comments[post.id] = comments_qs
+
+    # Fetch comment replies for each comment separately
+    comment_replies = {}
+    for comments_qs in post_comments.values():
+        for comment in comments_qs:
+            replies_qs = ReplyComment.objects.filter(comment=comment)
+            comment_replies.setdefault(comment.id, []).extend(replies_qs)
+
+    # Assign comments and comment replies to each post
     for post in posts:
         post.comments = post_comments.get(post.id, [])
+        for comment in post.comments:
+            comment.comment_replies = comment_replies.get(comment.id, [])
     return posts

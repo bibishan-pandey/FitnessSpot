@@ -4,6 +4,30 @@
 
 {% block title %}Fitness Spot - Feed{% endblock %}
 
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    summary::marker {
+        content: "";
+        /* Hide the pseudo-element */
+    }
+
+    ::-webkit-scrollbar {
+        width: 1px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #ededed;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #d0e5ff;
+        border-radius: 10px;
+    }
+</style>
+
 {% block content %}
     <div class="main_content">
         <div class="mcontainer">
@@ -286,12 +310,12 @@
                                          id="comment-div{{ post.id }}">
 
                                         {% for c in post.comments %}
-                                            <div class="flex card shadow p-2" id="comment-div{{ c.id }}">
+                                            <div class="flex card shadow px-2 py-3" id="comment-div{{ c.id }}">
                                                 <div class="w-10 h-10 rounded-full relative flex-shrink-0">
                                                     <img src="{{ c.user.profile.avatar.url }}" alt=""
                                                          class="absolute h-full rounded-full w-full">
                                                 </div>
-                                                <div class="w-full">
+                                                <div class="w-full relative">
 
                                                     <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12 dark:bg-gray-800 dark:text-gray-100 flex items-center w-full">
                                                         <p class="leading-6 flex-grow">{{ c.comment }}</p>
@@ -302,23 +326,8 @@
                                                                     class="fas fa-trash"></i></button>
                                                         {% endif %}
                                                     </div>
-                                                    <div class="text-sm flex items-center space-x-3 mt-2 ml-5">
-                                                        <a id="like-comment-btn" data-like-comment="{{ c.id }}"
-                                                           class="like-comment{{ c.id }} text-red-500"
-                                                                {% if request.user in c.likes.all %}
-                                                           style="color: red;"
-                                                                {% else %}
-                                                           style="color: rgb(128,128,128);"
-                                                                {% endif %} >
-                                                            <i id="comment-icon{{ c.cid }}"
-                                                               class=" fas fa-heart"></i>
-                                                        </a>
-                                                        <small>
-                                                            <span class="" id="comment-likes-count{{ c.id }}">
-                                                                {{ c.likes.all.count }}
-                                                            </span>
-                                                        </small>
-                                                        <span> <small>{{ c.updated_at|timesince }} ago</small> </span>
+                                                    <div class="text-sm flex items-center gap-3 mt-2 ml-5 absolute -top-6">
+                                                        <small>{{ c.updated_at|timesince }} ago</small>
                                                     </div>
                                                     <details class="ml-5">
                                                         <summary class="flex gap-2">
@@ -344,11 +353,11 @@
                                                     </details>
                                                     <div class="reply-div{{ c.id }}">
 
-                                                        {% for r in c.comment_replies|slice:1 %}
+                                                        {% for r in c.comment_replies %}
                                                             <div class="flex mr-12 mb-2 mt-2"
                                                                  style="margin-right: 20px;">
                                                                 <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                                                    <img src="{{ r.user.profile.image.url }}"
+                                                                    <img src="{{ r.user.profile.avatar.url }}"
                                                                          style="width: 40px; height: 40px;" alt=""
                                                                          class="absolute h-full rounded-full w-full">
                                                                 </div>
@@ -360,14 +369,6 @@
                                                                     <span> <small>{{ r.updated_at|timesince }} ago</small> </span>
                                                                 </div>
                                                             </div>
-
-                                                            {% if c.comment_replies.count > 0 %}
-
-                                                                <span style="border-bottom: dashed 1px rgb(73, 173, 255);"><a
-                                                                        href=""
-                                                                        class="text-blue-500"> <small>View All {{ c.comment_replies.count }} Replies</small> </a></span>
-                                                            {% endif %}
-
                                                         {% endfor %}
 
                                                     </div>

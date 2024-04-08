@@ -1,12 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.utils.timesince import timesince
 from django.views.decorators.csrf import csrf_exempt
 
-from core.models import Post, Workout, Comment, Friend
+from core.models import Post, Workout, Comment, ReplyComment
 from utils.posts import get_posts_with_comments
 
 
@@ -159,3 +158,26 @@ def delete_comment(request):
         comment.delete()
         return JsonResponse({"data": "Comment deleted successfully"})
     return JsonResponse({"error": "Unauthorized"}, status=401)
+
+
+@csrf_exempt
+@login_required
+def reply_comment(request):
+    _id = request.GET.get('id')
+    reply = request.GET.get('reply')
+    comment = get_object_or_404(Comment, id=_id)
+
+    new_reply = ReplyComment.objects.create(
+        comment=comment,
+        reply=reply,
+        user=request.user
+    )
+
+    data = {
+        'reply': new_reply.reply,
+        "profile_image": new_reply.user.profile.avatar.url,
+        "date": timesince(new_reply.updated_at),
+        "reply_id": new_reply.id,
+        "comment_id": new_reply.comment.id
+    }
+    return JsonResponse({"data": data})
