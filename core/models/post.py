@@ -12,7 +12,7 @@ from utils.media_upload import upload_post_image_location, upload_post_video_loc
 
 
 class Post(BaseModel):
-    pid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=upload_post_image_location, blank=True, null=True)
@@ -21,7 +21,7 @@ class Post(BaseModel):
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     visibility = models.CharField(max_length=15, choices=VISIBILITY, default='public')
     likes = models.ManyToManyField(User, related_name='post_likes', blank=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(null=True, blank=True, default=True)
     views = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):

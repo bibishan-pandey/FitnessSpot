@@ -2,7 +2,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post1",
+            "uid": "post1",
             "author": 1,
             "content": "This is post number 1.",
             "image": "post/image/1.jpg",
@@ -14,7 +14,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post2",
+            "uid": "post2",
             "author": 1,
             "content": "This is post number 2.",
             "image": "post/image/2.jpg",
@@ -26,7 +26,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post3",
+            "uid": "post3",
             "author": 1,
             "content": "This is post number 3.",
             "image": "post/image/3.jpg",
@@ -38,7 +38,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post4",
+            "uid": "post4",
             "author": 1,
             "content": "This is post number 4.",
             "image": "post/image/4.jpg",
@@ -50,7 +50,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post5",
+            "uid": "post5",
             "author": 1,
             "content": "This is post number 5.",
             "image": "post/image/5.jpg",
@@ -62,7 +62,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post6",
+            "uid": "post6",
             "author": 1,
             "content": "This is post number 6.",
             "image": "post/image/6.jpg",
@@ -74,7 +74,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post7",
+            "uid": "post7",
             "author": 1,
             "content": "This is post number 7.",
             "image": "post/image/7.jpg",
@@ -86,7 +86,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post8",
+            "uid": "post8",
             "author": 1,
             "content": "This is post number 8.",
             "image": "post/image/8.jpg",
@@ -98,7 +98,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post9",
+            "uid": "post9",
             "author": 1,
             "content": "This is post number 9.",
             "image": "post/image/9.jpg",
@@ -110,7 +110,7 @@
     {
         "model": "core.post",
         "fields": {
-            "pid": "post10",
+            "uid": "post10",
             "author": 1,
             "content": "This is post number 10.",
             "image": "post/image/10.jpg",

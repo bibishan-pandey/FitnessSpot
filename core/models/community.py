@@ -12,7 +12,7 @@ from .workout import Workout
 
 
 class Community(BaseModel):
-    cid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=1000, null=True, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='community_owner')
@@ -46,7 +46,7 @@ class Community(BaseModel):
 
 
 class CommunityPost(BaseModel):
-    cid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to=upload_community_image_location, blank=True, null=True)
@@ -55,7 +55,7 @@ class CommunityPost(BaseModel):
     slug = models.SlugField(max_length=255, unique=True, null=True, blank=True)
     visibility = models.CharField(max_length=15, choices=VISIBILITY, default='public')
     likes = models.ManyToManyField(User, related_name='community_post_likes', blank=True)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True, null=True, blank=True)
     views = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):

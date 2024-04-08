@@ -2,7 +2,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "abc123",
+      "uid": "abc123",
       "author": 1,
       "name": "Morning Run",
       "start_time": "08:00:00",
@@ -21,7 +21,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "def456",
+      "uid": "def456",
       "author": 1,
       "name": "Weightlifting Session",
       "start_time": "12:00:00",
@@ -35,7 +35,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "ghi789",
+      "uid": "ghi789",
       "author": 1,
       "name": "Evening Yoga",
       "start_time": "18:00:00",
@@ -49,7 +49,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "jkl012",
+      "uid": "jkl012",
       "author": 1,
       "name": "Boxing Training",
       "start_time": "10:00:00",
@@ -63,7 +63,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "mno345",
+      "uid": "mno345",
       "author": 1,
       "name": "Cycling",
       "start_time": "16:00:00",
@@ -78,7 +78,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "pqr678",
+      "uid": "pqr678",
       "author": 1,
       "name": "Pilates",
       "start_time": "09:30:00",
@@ -92,7 +92,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "stu901",
+      "uid": "stu901",
       "author": 1,
       "name": "Swimming",
       "start_time": "11:00:00",
@@ -107,7 +107,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "vwx234",
+      "uid": "vwx234",
       "author": 1,
       "name": "HIIT",
       "start_time": "17:30:00",
@@ -121,7 +121,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "yza567",
+      "uid": "yza567",
       "author": 1,
       "name": "Kickboxing",
       "start_time": "10:00:00",
@@ -135,7 +135,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "bcd890",
+      "uid": "bcd890",
       "author": 1,
       "name": "Rowing",
       "start_time": "14:00:00",
@@ -150,7 +150,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "efg123",
+      "uid": "efg123",
       "author": 1,
       "name": "Jump Rope",
       "start_time": "08:30:00",
@@ -164,7 +164,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "hij456",
+      "uid": "hij456",
       "author": 1,
       "name": "Barre",
       "start_time": "19:00:00",
@@ -178,7 +178,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "klm789",
+      "uid": "klm789",
       "author": 1,
       "name": "Circuit Training",
       "start_time": "17:00:00",
@@ -192,7 +192,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "nop012",
+      "uid": "nop012",
       "author": 1,
       "name": "Hiking",
       "start_time": "09:00:00",
@@ -207,7 +207,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "qrs345",
+      "uid": "qrs345",
       "author": 1,
       "name": "Dancing",
       "start_time": "20:00:00",
@@ -221,7 +221,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "tuv678",
+      "uid": "tuv678",
       "author": 1,
       "name": "Skiing",
       "start_time": "10:30:00",
@@ -235,7 +235,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "wxy901",
+      "uid": "wxy901",
       "author": 1,
       "name": "Rock Climbing",
       "start_time": "13:00:00",
@@ -249,7 +249,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "zab234",
+      "uid": "zab234",
       "author": 1,
       "name": "Martial Arts",
       "start_time": "11:00:00",
@@ -263,7 +263,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "bcd567",
+      "uid": "bcd567",
       "author": 1,
       "name": "CrossFit",
       "start_time": "17:30:00",
@@ -277,7 +277,7 @@
   {
     "model": "core.workout",
     "fields": {
-      "pid": "def890",
+      "uid": "def890",
       "author": 1,
       "name": "Functional Training",
       "start_time": "08:00:00",

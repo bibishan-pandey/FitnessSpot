@@ -7,7 +7,7 @@ from core.models.workout_type import WorkoutType
 
 
 class Workout(BaseModel):
-    pid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     start_time = models.TimeField(null=True, blank=True)

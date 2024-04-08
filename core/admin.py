@@ -30,9 +30,9 @@ class WorkoutAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('pid', 'author', 'name', 'type', 'created_at', 'updated_at')
-    list_display = ('pid', 'author', 'name', 'type', 'created_at', 'updated_at')
-    sortable_by = ('pid', 'author', 'name', 'type', 'created_at', 'updated_at')
+    ordering = ('uid', 'author', 'name', 'type', 'created_at', 'updated_at')
+    list_display = ('uid', 'author', 'name', 'type', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'author', 'name', 'type', 'created_at', 'updated_at')
 
 
 @admin.register(Post)
@@ -46,9 +46,9 @@ class PostAdmin(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    list_display = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    sortable_by = ('pid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    ordering = ('uid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    list_display = ('uid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'author', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
 
 
 @admin.register(FriendRequest)
@@ -56,9 +56,9 @@ class FriendRequestAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
-    list_display = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
-    sortable_by = ('fid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+    ordering = ('uid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+    list_display = ('uid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'from_user', 'to_user', 'status', 'created_at', 'updated_at')
 
 
 @admin.register(Friend)
@@ -66,9 +66,9 @@ class FriendAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('fid', 'user', 'friend', 'created_at', 'updated_at')
-    list_display = ('fid', 'user', 'friend', 'created_at', 'updated_at')
-    sortable_by = ('fid', 'user', 'friend', 'created_at', 'updated_at')
+    ordering = ('uid', 'user', 'friend', 'created_at', 'updated_at')
+    list_display = ('uid', 'user', 'friend', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'user', 'friend', 'created_at', 'updated_at')
 
 
 @admin.register(Comment)
@@ -76,9 +76,9 @@ class CommentAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
-    list_display = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
-    sortable_by = ('cid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+    ordering = ('uid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+    list_display = ('uid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'user', 'post', 'comment', 'active', 'created_at', 'updated_at')
 
 
 @admin.register(ReplyComment)
@@ -86,9 +86,9 @@ class ReplyCommentAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
-    list_display = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
-    sortable_by = ('rcid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+    ordering = ('uid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+    list_display = ('uid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'user', 'comment', 'reply', 'active', 'created_at', 'updated_at')
 
 
 @admin.register(Notification)
@@ -96,11 +96,11 @@ class NotificationAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('nid', 'from_user', 'to_user', 'post', 'comment',
+    ordering = ('uid', 'from_user', 'to_user', 'post', 'comment',
                 'notification_type', 'read', 'created_at', 'updated_at')
-    list_display = ('nid', 'from_user', 'to_user', 'post', 'comment',
+    list_display = ('uid', 'from_user', 'to_user', 'post', 'comment',
                     'notification_type', 'read', 'created_at', 'updated_at')
-    sortable_by = ('nid', 'from_user', 'to_user', 'post', 'comment',
+    sortable_by = ('uid', 'from_user', 'to_user', 'post', 'comment',
                    'notification_type', 'read', 'created_at', 'updated_at')
 
 
@@ -109,9 +109,9 @@ class CommunityAdmin(admin.ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    list_display = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    sortable_by = ('cid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    ordering = ('uid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    list_display = ('uid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'owner', 'name', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
 
 
 @admin.register(CommunityPost)
@@ -125,6 +125,6 @@ class CommunityPostAdmin(ModelAdmin):
     # Display submit button in filters
     list_filter_submit = True
 
-    ordering = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    list_display = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
-    sortable_by = ('cid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    ordering = ('uid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    list_display = ('uid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')
+    sortable_by = ('uid', 'community', 'content', 'slug', 'visibility', 'active', 'views', 'created_at', 'updated_at')

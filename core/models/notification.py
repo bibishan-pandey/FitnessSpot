@@ -18,7 +18,7 @@ NOTIFICATION_TYPE = (
 
 
 class Notification(BaseModel):
-    nid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_from_user')
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_to_user')
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True, blank=True)
@@ -32,4 +32,4 @@ class Notification(BaseModel):
     def __str__(self):
         if self.from_user and self.to_user:
             return self.from_user.username + " to " + self.to_user.username
-        return self.nid
+        return self.uid

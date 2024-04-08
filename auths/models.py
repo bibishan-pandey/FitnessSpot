@@ -36,7 +36,7 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
-    pid = ShortUUIDField(length=7, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True, primary_key=True)
+    uid = ShortUUIDField(length=7, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cover = models.ImageField(upload_to=upload_cover_location, default="avatar.jpg", blank=True, null=True)
     avatar = models.ImageField(upload_to=upload_avatar_location, default="cover.jpg", blank=True, null=True)

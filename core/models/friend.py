@@ -6,7 +6,7 @@ from core.models.base import BaseModel
 
 
 class Friend(BaseModel):
-    fid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
+    uid = ShortUUIDField(length=8, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True)
     user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     friend = models.ForeignKey(User, related_name='friend', on_delete=models.CASCADE)
 
