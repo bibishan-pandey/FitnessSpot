@@ -1,0 +1,141 @@
+@startuml
+
+class User {
+    - username: string
+    - email: string
+    - phone: string
+    - gender: string
+    - otp: string
+}
+
+class Profile {
+    - uid: string
+    - user: User
+    - cover: ImageField
+    - avatar: ImageField
+    - phone: string
+    - gender: string
+    - height: float
+    - weight: float
+    - dob: DateField
+    - about_me: string
+    - bio: string
+    - relationship_status: string
+    - country: string
+    - city: string
+    - address: string
+    - postal_code: string
+    - working_at: string
+    - working_as: string
+    - working_since: DateField
+    - social_facebook: URLField
+    - social_instagram: URLField
+    - social_twitter: URLField
+    - social_youtube: URLField
+    - social_website: URLField
+    - verified: boolean
+    - followers: ManyToManyField<User>
+    - following: ManyToManyField<User>
+    - friends: ManyToManyField<User>
+    - blocked: ManyToManyField<User>
+    - slug: SlugField
+    - created_at: DateTimeField
+    - updated_at: DateTimeField
+}
+
+class BaseModel {
+    - created_at: DateTimeField
+    - updated_at: DateTimeField
+}
+
+class WorkoutType {
+    - name: string
+    - category: string
+}
+
+class Workout {
+    - uid: string
+    - author: User
+    - name: string
+    - start_time: TimeField
+    - start_date: DateField
+    - type: WorkoutType
+    - duration: DurationField
+    - calories_burned: float
+    - distance: float
+    - pace: float
+    - elevation: float
+    - steps: PositiveIntegerField
+    - notes: string
+    - heart_rate: PositiveIntegerField
+}
+
+class Post {
+    - uid: string
+    - author: User
+    - content: string
+    - image: ImageField
+    - video: FileField
+    - workout: Workout
+    - slug: SlugField
+    - visibility: string
+    - likes: ManyToManyField<User>
+    - active: boolean
+    - views: PositiveIntegerField
+}
+
+class Comment {
+    - uid: string
+    - user: User
+    - post: Post
+    - comment: string
+    - likes: ManyToManyField<User>
+    - active: boolean
+}
+
+class ReplyComment {
+    - uid: string
+    - user: User
+    - comment: Comment
+    - reply: string
+    - active: boolean
+}
+
+class Friend {
+    - uid: string
+    - user: User
+    - friend: User
+}
+
+class FriendRequest {
+    - uid: string
+    - from_user: User
+    - to_user: User
+    - status: string
+}
+
+class Notification {
+    - uid: string
+    - from_user: User
+    - to_user: User
+    - post: Post
+    - comment: Comment
+    - notification_type: string
+    - read: boolean
+}
+
+User -- Profile: "has"
+Profile -- BaseModel: "extends"
+Workout -- WorkoutType: "has"
+Post -- Workout: "has"
+Comment -- Post: "comments"
+ReplyComment -- Comment: "replies"
+Friend -- User: "is friend"
+FriendRequest -- User: "from user"
+FriendRequest -- User: "to user"
+Notification -- User: "from user"
+Notification -- User: "to user"
+Notification -- Post: "on post"
+Notification -- Comment: "on comment"
+
+@enduml

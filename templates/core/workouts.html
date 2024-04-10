@@ -1,0 +1,63 @@
+{% extends 'partials/base.html' %}
+
+{% load mathfilters %}
+
+{% block title %}Fitness Spot - Feed{% endblock %}
+
+<style>
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .card-content {
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+
+{% block content %}
+    <div class="main_content">
+        <div class="mcontainer">
+            <div class="flex justify-between items-center p-5">
+                <h1 class="text-3xl font-bold">Your workout routines</h1>
+            </div>
+
+            <div class="px-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {% for workout in workouts %}
+                    <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{{ workout.name }}</h5>
+
+                        <div class="card-content">@{{ workout.author.username }}</div>
+                        <div class="card-content">Type: {{ workout.type.name }}</div>
+                        <div class="card-content">Start Date: {{ workout.start_date }}</div>
+
+                        <div class="card-content">Duration: {{ workout.duration }}</div>
+                        <div class="card-content">Calories Burned: {{ workout.calories_burned }}</div>
+                        <div class="card-content">Distance: {{ workout.distance }}</div>
+                        <div class="card-content">Pace: {{ workout.pace }}</div>
+                        <div class="card-content">Elevation: {{ workout.elevation }}</div>
+                        <div class="card-content">Steps: {{ workout.steps }}</div>
+                        <div class="card-content">Notes: {{ workout.notes }}</div>
+                        <div class="card-content">Heart Rate: {{ workout.heart_rate }}</div>
+
+                        <div class="card-content">No additional details available.</div>
+                    </div>
+                    {% empty %}
+                    <div class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">No workouts available</h5>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

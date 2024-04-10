@@ -8,8 +8,10 @@ urlpatterns = [
     path('', views.index, name='fitness-feed'),
     path("posts/<slug:slug>/", views.post_detail, name="post-detail"),
     path('create-workout-type/', views.create_workout_type, name='create-workout-type'),
+    path('workout-types/', views.workout_types, name='workout-types'),
 
     path('create-workout/', views.create_workout, name='create-workout'),
+    path('workouts/', views.workouts, name='workouts'),
 
     # Ajax endpoints
     path('create-post/', views.create_post, name='create-post'),

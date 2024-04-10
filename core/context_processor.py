@@ -1,4 +1,4 @@
-from core.models import FriendRequest, Notification, WorkoutType
+from core.models import FriendRequest, Notification, WorkoutType, Workout
 
 
 def context_processor(request):
@@ -17,8 +17,14 @@ def context_processor(request):
     except:
         workout_types = None
 
+    try:
+        workouts = Workout.objects.filter(author=request.user)
+    except:
+        workouts = None
+
     return {
         'friend_request': friend_request,
         'notification': notification,
-        'workout_types': workout_types
+        'workout_types': workout_types,
+        'workouts': workouts
     }

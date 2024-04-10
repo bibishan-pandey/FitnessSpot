@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Fitness Spot - Workout Types{% endblock %}
+
+{% block content %}
+    <div class="main_content">
+        <div class="mcontainer">
+            <div class="flex justify-between items-center p-5">
+                <h1 class="text-3xl font-bold">Our workout types</h1>
+            </div>
+
+            <div class="space-y-7 px-5">
+                <table class="table-auto w-full">
+                    <thead>
+                    <tr>
+                        <th>Workout name</th>
+                        <th>Category</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for workout in workout_types %}
+                        <tr>
+                            <td>{{ workout.name }}</td>
+                            <td>{{ workout.category }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">No workouts available</h5>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

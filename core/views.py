@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
 from core.forms import WorkoutTypeForm, WorkoutForm
-from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend
+from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend, Notification, WorkoutType
 from utils.notification import (send_notification, NOTIFICATION_NEW_LIKE, NOTIFICATION_NEW_COMMENT,
                                 NOTIFICATION_NEW_COMMENT_REPLY, NOTIFICATION_NEW_FRIEND_REQUEST,
                                 NOTIFICATION_FRIEND_REQUEST_ACCEPTED)
@@ -19,8 +19,6 @@ from utils.posts import get_posts_with_comments
 def index(request):
     posts = get_posts_with_comments(request)
 
-    workouts = Workout.objects.filter(author=request.user)
-
     # Add others count to each post to show the number of other people who liked the post
     # And for the first person who liked the post, we don't want to show the count instead
     # we show the name of that person
@@ -29,10 +27,14 @@ def index(request):
 
     context = {
         'posts': posts,
-        'workouts': workouts
     }
 
     return render(request, 'core/index.html', context)
+
+
+@login_required
+def workout_types(request):
+    return render(request, 'core/workout-types.html')
 
 
 @login_required
@@ -46,6 +48,11 @@ def create_workout_type(request, *args, **kwargs):
         else:
             messages.error(request, "Failed to create workout type. Please check the form.")
     return index(request)
+
+
+@login_required
+def workouts(request):
+    return render(request, 'core/workouts.html')
 
 
 @login_required
@@ -257,6 +264,10 @@ def add_friend(request):
     to_user = User.objects.get(id=receiver_id)
 
     try:
+        # check if other user has already sent a request
+        friend_request = FriendRequest.objects.filter(from_user=to_user, to_user=from_user).first()
+        if friend_request:
+            friend_request.delete()
         friend_request = FriendRequest.objects.get(from_user=from_user, to_user=to_user)
         if friend_request:
             friend_request.delete()
@@ -292,6 +303,11 @@ def accept_friend(request):
     friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
     friend_request.delete()
 
+    # check if other person also sent a request, if sent delete it
+    friend_request = FriendRequest.objects.filter(to_user=from_user, from_user=to_user).first()
+    if friend_request:
+        friend_request.delete()
+
     send_notification(
         from_user=to_user,
         to_user=from_user,
@@ -315,6 +331,11 @@ def reject_friend(request):
     # Delete the friend request
     friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
     friend_request.delete()
+
+    # remove the notification also
+    notification = Notification.objects.filter(from_user=from_user, to_user=to_user,
+                                               notification_type=NOTIFICATION_NEW_FRIEND_REQUEST)
+    notification.delete()
 
     return JsonResponse({
         "is_friend": False
