@@ -44,7 +44,7 @@
                                 <!-- post header-->
                                 <div class="flex justify-between items-center lg:p-4 p-2.5">
                                     <div class="flex flex-1 items-start space-x-4">
-                                        <a href="{% url 'auths:fitness-others-profile' username=p.author.username %}">
+                                        <a href="{% url 'auths:fitness-others-profile' username=post.author.username %}">
                                             <img src="{{ post.author.profile.avatar.url }}"
                                                  style="width: 40px; height: 40px;"
                                                  class="bg-gray-200 border border-white rounded-full w-10 h-10">
@@ -209,7 +209,7 @@
                                     <div class="flex space-x-4 lg:font-bold border-b dark:border-gray-700 pb-3">
                                         <a class="flex items-center space-x-2  text-blue-500"
                                            style="cursor: pointer;">
-                                            <div class="p-2 rounded-full like-btn{{ post.id }} {% if request.user in post.likes.all %}text-blue-500 {% else %} text-black {% endif %} "
+                                            <div class="p-2 rounded-full like-btn{{ post.id }} {% if request.user in post.likes.all %} text-blue-500 dark:bg-gray-600 {% else %} text-black {% endif %} "
                                                  id="like-btn" data-like-btn="{{ post.id }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                      fill="currentColor"
@@ -234,6 +234,14 @@
                                                 Comment
                                             </div>
                                         </a>
+                                        <a href="{% url 'core:post-detail' post.slug %}" class="flex items-center space-x-2">
+                                            <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </div>
+                                            <div>
+                                                View Post
+                                            </div>
+                                        </a>
                                     </div>
 
                                     <div class="flex items-center space-x-3 pt-2">
@@ -241,7 +249,7 @@
                                         {% if post.likes.all.count > 0 %}
                                             <div class="flex items-center">
                                                 {% for i in post.likes.all|slice:"3" %}
-                                                    {% if forloop.first %}
+                                                        {% if forloop.first %}
                                                         <img src="{{ i.profile.avatar.url }}" alt=""
                                                              class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
                                                     {% else %}

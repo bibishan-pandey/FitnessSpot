@@ -20,14 +20,14 @@ def get_posts_with_comments(request, *args, **kwargs):
     # Fetch comments for each post separately
     post_comments = {}
     for post in posts:
-        comments_qs = Comment.objects.filter(post=post)
+        comments_qs = Comment.objects.filter(post=post).order_by('created_at')
         post_comments[post.id] = comments_qs
 
     # Fetch comment replies for each comment separately
     comment_replies = {}
     for comments_qs in post_comments.values():
         for comment in comments_qs:
-            replies_qs = ReplyComment.objects.filter(comment=comment)
+            replies_qs = ReplyComment.objects.filter(comment=comment).order_by('created_at')
             comment_replies.setdefault(comment.id, []).extend(replies_qs)
 
     # Assign comments and comment replies to each post

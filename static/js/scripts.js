@@ -138,6 +138,10 @@ $(document).ready(function () {
 
                     $("#post-list").prepend(_html);
                     $("#create-post-modal").removeClass("uk-flex uk-open");
+
+                    // redirect to the post
+                    window.location.href = "/posts/" + postData.slug;
+                    console.log(postData.slug)
                 }
             },
             error: function (xhr, status, error) {
@@ -244,7 +248,7 @@ $(document).ready(function () {
                     </div>\
                 </div>\
             '
-                $("#comment-div" + id).prepend(newComment);
+                $("#comment-div" + id).append(newComment);
                 $("#comment-count" + id).text(res.data.comment_count);
                 $("#comment-input" + id).val("")
             }
@@ -302,7 +306,7 @@ $(document).ready(function () {
                 </div>\
             </div>\
             '
-                $(".reply-div" + id).prepend(newReply);
+                $(".reply-div" + id).append(newReply);
                 $("#reply-input" + id).val("")
 
                 console.log(res.data.bool);

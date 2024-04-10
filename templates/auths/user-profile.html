@@ -262,7 +262,7 @@
                                             <div class="flex space-x-4 lg:font-bold border-b dark:border-gray-700 pb-3">
                                                 <a class="flex items-center space-x-2  text-blue-500"
                                                    style="cursor: pointer;">
-                                                    <div class="p-2 rounded-full like-btn{{ p.id }} {% if request.user in p.likes.all %}text-blue-500 {% else %} text-black {% endif %} "
+                                                    <div class="p-2 rounded-full like-btn{{ p.id }} {% if request.user in p.likes.all %} text-blue-500 dark:bg-gray-600 {% else %} text-black {% endif %} "
                                                          id="like-btn" data-like-btn="{{ p.id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                              fill="currentColor"
@@ -285,6 +285,14 @@
                                                     <div><b><span
                                                             id="comment-count{{ p.id }}">{{ p.comments_count }}</span></b>
                                                         Comment
+                                                    </div>
+                                                </a>
+                                                <a href="{% url 'core:post-detail' p.slug %}" class="flex items-center space-x-2">
+                                                    <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </div>
+                                                    <div>
+                                                        View Post
                                                     </div>
                                                 </a>
                                             </div>
