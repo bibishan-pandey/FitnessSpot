@@ -53,7 +53,7 @@
                     </nav>
 
                     <!-- button actions -->
-                    <div class="flex items-center space-x-1.5 flex-shrink-0 pr-4 mb-2 justify-center order-1 relative">
+                    <div class="flex items-center space-x-1.5 pr-4 mb-2 justify-end order-1 relative w-full">
                         {% if current_user.user != other_user.user %}
 
                             {% if profile.user in friends.all %}
@@ -64,18 +64,35 @@
                                 </a>
 
                             {% else %}
-                                {% if is_friend_request_sent == True %}
-                                    <a id="add-friend" data-friend-id="{{ profile.user.id }}"
-                                       class="flex items-center justify-center h-10 px-5 rounded-md bg-red-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
+                                {% if has_received_request == True %}
+                                    <div class="flex w-full" id="friend-request-button-div">
+                                        <button id="accept-friend-request" data-request-id="{{ profile.user.id }}"
+                                                class="w-full accept-friend-request-hide{{ profile.user.id }} flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white hover:text-white">
+                        <span style="cursor: pointer;" class="accept-friend-request{{ profile.user.id }} text-white"
+                              id="friend-text"><i class="fas fa-user-plus"></i> Accept </span>
+                                        </button>
+                                        <button id="reject-friend-request" data-request-id="{{ profile.user.id }}"
+                                                class="w-full reject-friend-request-hide{{ profile.user.id }} flex items-center justify-center h-10 px-5 rounded-md bg-red-600 text-white space-x-1.5 hover:text-white"
+                                                style="margin-left: 5px;">
+                        <span style="cursor: pointer;"
+                              class="text-white reject-friend-request{{ profile.user.id }}"
+                              id="friend-text"><i class="fas fa-user-minus"></i> Reject </span>
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    {% if is_friend_request_sent == True %}
+                                        <a id="add-friend" data-friend-id="{{ profile.user.id }}"
+                                           class="flex items-center justify-center h-10 px-5 rounded-md bg-red-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
                                     <span style="cursor: pointer;" class="text-white" id="friend-text"><i
                                             class="fas fa-user-minus"></i> Cancel Request </span>
-                                    </a>
-                                {% else %}
-                                    <a id="add-friend" data-friend-id="{{ profile.user.id }}"
-                                       class="flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
+                                        </a>
+                                    {% else %}
+                                        <a id="add-friend" data-friend-id="{{ profile.user.id }}"
+                                           class="flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white add-friend{{ profile.user.id }}">
                                     <span style="cursor: pointer;" class="text-white" id="friend-text"><i
                                             class="fas fa-user-plus"></i> Add Friend </span>
-                                    </a>
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
 
                             {% endif %}
@@ -287,7 +304,8 @@
                                                         Comment
                                                     </div>
                                                 </a>
-                                                <a href="{% url 'core:post-detail' p.slug %}" class="flex items-center space-x-2">
+                                                <a href="{% url 'core:post-detail' p.slug %}"
+                                                   class="flex items-center space-x-2">
                                                     <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </div>

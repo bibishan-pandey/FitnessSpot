@@ -122,6 +122,9 @@ def others_profile(request, username):
     posts = get_posts_with_comments(request, author=other_user)
     workouts = Workout.objects.filter(author=other_user)
 
+    # Filter friend requests where from_user matches the profile user
+    has_received_request = FriendRequest.objects.filter(from_user=other_user, to_user=request.user).exists()
+
     is_friend_request_sent = False
 
     from_user = request.user
@@ -148,6 +151,7 @@ def others_profile(request, username):
         'posts': posts,
         'workouts': workouts,
         'is_friend_request_sent': is_friend_request_sent,
+        'has_received_request': has_received_request,
         'is_friend': is_friend
     }
     return render(request, 'auths/user-profile.html', context)

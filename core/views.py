@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from auths.models import User
 from core.forms import WorkoutTypeForm, WorkoutForm
-from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend, Notification, WorkoutType
+from core.models import Post, Workout, Comment, ReplyComment, FriendRequest, Friend, Notification
 from utils.notification import (send_notification, NOTIFICATION_NEW_LIKE, NOTIFICATION_NEW_COMMENT,
                                 NOTIFICATION_NEW_COMMENT_REPLY, NOTIFICATION_NEW_FRIEND_REQUEST,
                                 NOTIFICATION_FRIEND_REQUEST_ACCEPTED)
@@ -268,10 +268,21 @@ def add_friend(request):
         friend_request = FriendRequest.objects.filter(from_user=to_user, to_user=from_user).first()
         if friend_request:
             friend_request.delete()
-        friend_request = FriendRequest.objects.get(from_user=from_user, to_user=to_user)
+        friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=to_user).first()
         if friend_request:
             friend_request.delete()
-        return JsonResponse({'is_friend_request_sent': False})
+        friend_request = FriendRequest(from_user=from_user, to_user=to_user)
+        friend_request.save()
+
+        # Send a notification to the sender
+        send_notification(
+            from_user=from_user,
+            to_user=to_user,
+            post=None,
+            comment=None,
+            notification_type=NOTIFICATION_NEW_FRIEND_REQUEST
+        )
+        return JsonResponse({'is_friend_request_sent': True})
     except FriendRequest.DoesNotExist:
         friend_request = FriendRequest(from_user=from_user, to_user=to_user)
         friend_request.save()
@@ -285,6 +296,7 @@ def add_friend(request):
             notification_type=NOTIFICATION_NEW_FRIEND_REQUEST
         )
         return JsonResponse({'is_friend_request_sent': True})
+    return JsonResponse({'is_friend_request_sent': False})
 
 
 @csrf_exempt
@@ -301,7 +313,8 @@ def accept_friend(request):
 
     # Delete the friend request
     friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
-    friend_request.delete()
+    if friend_request:
+        friend_request.delete()
 
     # check if other person also sent a request, if sent delete it
     friend_request = FriendRequest.objects.filter(to_user=from_user, from_user=to_user).first()
@@ -330,7 +343,11 @@ def reject_friend(request):
 
     # Delete the friend request
     friend_request = FriendRequest.objects.filter(to_user=to_user, from_user=from_user).first()
-    friend_request.delete()
+    if friend_request:
+        friend_request.delete()
+    friend_request = FriendRequest.objects.filter(to_user=from_user, from_user=to_user).first()
+    if friend_request:
+        friend_request.delete()
 
     # remove the notification also
     notification = Notification.objects.filter(from_user=from_user, to_user=to_user,
