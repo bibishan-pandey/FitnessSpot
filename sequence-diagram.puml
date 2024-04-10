@@ -1,0 +1,88 @@
+@startuml
+
+actor User
+actor OtherUser as "Other User"
+actor AnonymousUser
+boundary System
+database Database
+
+User -> System: Register
+System -> Database: Save user information
+System -> User: Confirmation message
+User -> System: Sign In
+System -> Database: Retrieve user information
+System -> User: User authentication
+User -> System: View My Profile
+System -> Database: Retrieve user profile information
+System -> User: Display user profile
+User -> System: View Other User's Profile
+System -> Database: Retrieve other user's profile information
+System -> User: Display other user's profile
+User -> System: View Posts
+System -> Database: Retrieve posts
+System -> User: Display posts
+User -> System: View Post Detail
+System -> Database: Retrieve post details
+System -> User: Display post detail
+User -> System: Create Post
+System -> Database: Save post information
+System -> User: Confirmation message
+User -> System: Like Post
+System -> Database: Update post likes
+System -> User: Confirmation message
+User -> System: Comment Post
+System -> Database: Save comment
+System -> User: Confirmation message
+User -> System: Delete Post
+System -> Database: Delete post
+System -> User: Confirmation message
+User -> System: Delete Comment
+System -> Database: Delete comment
+System -> User: Confirmation message
+User -> System: Reply Comment
+System -> Database: Save reply
+System -> User: Confirmation message
+User -> System: Add Friend
+System -> Database: Save friend request
+System -> User: Confirmation message
+User -> System: Remove Friend
+System -> Database: Remove friend relationship
+System -> User: Confirmation message
+User -> System: Accept Friend
+System -> Database: Update friend request status
+System -> User: Confirmation message
+User -> System: Reject Friend
+System -> Database: Remove friend request
+System -> User: Confirmation message
+User -> System: View Notifications
+System -> Database: Retrieve notifications
+System -> User: Display notifications
+User -> System: View Friend Requests
+System -> Database: Retrieve friend requests
+System -> User: Display friend requests
+AnonymousUser -> System: Register
+System -> Database: Save anonymous user information
+System -> AnonymousUser: Confirmation message
+AnonymousUser -> System: Sign In
+System -> Database: Authenticate anonymous user
+System -> AnonymousUser: Confirmation message
+AnonymousUser -> System: View Posts
+System -> Database: Retrieve posts
+System -> AnonymousUser: Display posts
+AnonymousUser -> System: View Post Detail
+System -> Database: Retrieve post details
+System -> AnonymousUser: Display post detail
+AnonymousUser -> System: View Other User's Profile
+System -> Database: Retrieve other user's profile information
+System -> AnonymousUser: Display other user's profile
+OtherUser -> System: View Posts
+System -> Database: Retrieve posts
+System -> OtherUser: Display posts
+OtherUser -> System: View Post Detail
+System -> Database: Retrieve post details
+System -> OtherUser: Display post detail
+OtherUser -> System: View Other User's Profile
+System -> Database: Retrieve other user's profile information
+System -> OtherUser: Display other user's profile
+
+@enduml

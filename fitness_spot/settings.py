@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'import_export',
-    'mathfilters'
+    'mathfilters',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '0.0.0.0',
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'fitness_spot.urls'
