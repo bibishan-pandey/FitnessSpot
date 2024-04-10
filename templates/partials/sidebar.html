@@ -86,7 +86,9 @@
                             {% if f.friend.username and f.friend.username != request.user.username %}
                                 <a href="{% url 'auths:fitness-others-profile' f.friend.username %}">
                                     <div class="contact-avatar">
-                                        <img src="{{ f.friend.profile.avatar.url }}" alt="">
+                                        {% if f.friend.profile.avatar %}
+                                            <img src="{{ f.friend.profile.avatar.url }}" alt="">
+                                        {% endif %}
                                     </div>
                                     <div class="contact-username"> {{ f.friend.username }}</div>
                                 </a>

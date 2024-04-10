@@ -17,3 +17,7 @@ class ProfileUpdateForm(forms.ModelForm):
                   'relationship_status', 'country', 'city', 'address', 'postal_code', 'working_at',
                   'working_as', 'working_since', 'social_facebook', 'social_instagram', 'social_twitter',
                   'social_youtube', 'social_website')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['avatar'].required = False
