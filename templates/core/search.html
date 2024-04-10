@@ -1,0 +1,69 @@
+{% extends 'partials/base.html' %}
+
+{% load mathfilters %}
+
+{% block title %}Fitness Spot - Feed{% endblock %}
+
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    summary::marker {
+        content: "";
+        /* Hide the pseudo-element */
+    }
+
+    ::-webkit-scrollbar {
+        width: 1px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #ededed;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #d0e5ff;
+        border-radius: 10px;
+    }
+</style>
+
+{% block content %}
+    <div class="main_content">
+        <div class="mcontainer">
+            <div class="lg:flex lg:space-x-10">
+                <div class="lg:w-3/4 lg:px-20 space-y-7">
+                    {% if users.count > 0 %}
+                        <div class="widget card p-5 border-t">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="text-lg font-semibold"> Users </h4>
+                                <p class="text-sm"> {{ users.all.count }} user(s)</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 text-gray-600 font-semibold">
+
+                                {% for f in users.all %}
+
+                                    <a href="{% url 'auths:fitness-others-profile' f.username %}">
+                                        <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                            <img src="{{ f.profile.avatar.url }}"
+                                                 style="width: 100%; height: 100px; object-fit: cover;" alt=""
+                                                 class="w-full h-full object-cover absolute">
+                                        </div>
+                                        <div class="text-sm truncate">{{ f.username }}</div>
+                                    </a>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card lg:mx-0 uk-animation-slide-bottom-small mb-3">
+                            <div class="p-5 border-b dark:border-gray-700">
+                                <p class="text-gray-700">No users available</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

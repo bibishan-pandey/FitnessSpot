@@ -1,6 +1,14 @@
 import uuid
 
 
+def default_avatar():
+    return "avatar.jpg"
+
+
+def default_cover():
+    return "cover.jpg"
+
+
 def upload_image_location(uid, username, filename, upload_type="avatar"):
     """
     Upload location for the user profile avatar, cover image, and user post images.

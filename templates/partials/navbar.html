@@ -11,6 +11,15 @@
                 </div>
             </div>
 
+            <div class="header_search"><i class="uil-search-alt"></i>
+                <form action="{% url 'core:search' %}" method="GET" class="flex items-center gap-4">
+                    <input type="text" name="q" class="form-control" placeholder="Search for friends..."
+                           autocomplete="off">
+                    <button type="submit" class="btn_search"/>
+                </form>
+
+            </div>
+
             <div class="right_side">
                 <div class="header_widgets">
                     <a href="#" class="is_icon">
@@ -130,13 +139,15 @@
                                                 {% endif %}
 
                                                 {% if n.notification_type == "friend_request_accepted" %}
-                                                    accepted your <a href="{% url 'auths:fitness-others-profile' n.from_user.username %}"
+                                                    accepted your
+                                                    <a href="{% url 'auths:fitness-others-profile' n.from_user.username %}"
                                                        class="w-fit italic hover:text-blue-600 underline">friend request</a>
                                                 {% endif %}
 
                                                 {% if n.notification_type == "new_friend_request" %}
-                                                    sent you a <a href="{% url 'auths:fitness-others-profile' n.from_user.username %}"
-                                                                  class="w-fit italic hover:text-blue-600 underline">friend request</a>
+                                                    sent you a
+                                                    <a href="{% url 'auths:fitness-others-profile' n.from_user.username %}"
+                                                       class="w-fit italic hover:text-blue-600 underline">friend request</a>
                                                 {% endif %}
 
 

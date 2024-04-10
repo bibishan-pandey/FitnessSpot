@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.utils.text import slugify
 from shortuuid.django_fields import ShortUUIDField
 
-from utils.media_upload import upload_cover_location, upload_avatar_location
+from utils.media_upload import upload_cover_location, upload_avatar_location, default_cover, default_avatar
 
 GENDER = (
     ("male", "Male"),
@@ -38,8 +38,8 @@ class User(AbstractUser):
 class Profile(models.Model):
     uid = ShortUUIDField(length=7, max_length=26, alphabet='abcdefghijklmnopqrstuvqxyz', unique=True, primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    cover = models.ImageField(upload_to=upload_cover_location, default="avatar.jpg", blank=True, null=True)
-    avatar = models.ImageField(upload_to=upload_avatar_location, default="cover.jpg", blank=True, null=True)
+    cover = models.ImageField(upload_to=upload_cover_location, default=default_cover, blank=True, null=True)
+    avatar = models.ImageField(upload_to=upload_avatar_location, default=default_avatar, blank=True, null=True)
     phone = models.CharField(max_length=10, blank=True, null=True)
     gender = models.CharField(max_length=6, choices=GENDER, blank=True, null=True)
     height = models.FloatField(blank=True, null=True)

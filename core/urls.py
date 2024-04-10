@@ -13,6 +13,9 @@ urlpatterns = [
     path('create-workout/', views.create_workout, name='create-workout'),
     path('workouts/', views.workouts, name='workouts'),
 
+    # search with query
+    path('search/', views.search, name='search'),
+
     # Ajax endpoints
     path('create-post/', views.create_post, name='create-post'),
     path('like-post/', views.like_post, name='like-post'),

@@ -1012,3 +1012,5 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 !/scripts/
+!/media/avatar.jpg
+!/media/cover.jpg

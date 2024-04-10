@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timesince import timesince
@@ -30,6 +31,23 @@ def index(request):
     }
 
     return render(request, 'core/index.html', context)
+
+
+@login_required
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        users = User.objects.filter(
+            Q(username__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        )
+        context = {
+            'users': users,
+            'query': query
+        }
+        return render(request, 'core/search.html', context)
+    return redirect('core:fitness-feed')
 
 
 @login_required
