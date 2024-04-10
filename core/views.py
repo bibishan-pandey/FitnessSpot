@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -291,9 +292,11 @@ def add_friend(request):
         friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=to_user).first()
         if friend_request:
             friend_request.delete()
+        else:
+            raise ObjectDoesNotExist()
 
         return JsonResponse({'is_friend_request_sent': False})
-    except FriendRequest.DoesNotExist:
+    except ObjectDoesNotExist:
         friend_request = FriendRequest(from_user=from_user, to_user=to_user)
         friend_request.save()
 
