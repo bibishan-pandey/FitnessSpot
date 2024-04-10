@@ -23,14 +23,16 @@ def context_processor(request):
         workouts = None
 
     try:
-        friends = Friend.objects.filter(user=request.user)
+        my_friends_from_user = Friend.objects.filter(user=request.user)
+        my_friends_to_user = Friend.objects.filter(friend=request.user)
+        my_friends = my_friends_from_user | my_friends_to_user
     except:
-        friends = None
+        my_friends = None
 
     return {
         'friend_request': friend_request,
         'notification': notification,
         'workout_types': workout_types,
         'workouts': workouts,
-        'friends': friends if 'friends' in locals() else None  # Ensure friends is defined even if there's an error
+        'my_friends': my_friends if 'my_friends' in locals() else None  # Ensure friends is defined even if there's an error
     }

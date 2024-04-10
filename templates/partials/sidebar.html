@@ -82,8 +82,8 @@
 
                 <div class="contact-list px-2">
                     <div class="p-1">
-                        {% for f in friends %}
-                            {% if f.friend.username %}
+                        {% for f in my_friends %}
+                            {% if f.friend.username and f.friend.username != request.user.username %}
                                 <a href="{% url 'auths:fitness-others-profile' f.friend.username %}">
                                     <div class="contact-avatar">
                                         <img src="{{ f.friend.profile.avatar.url }}" alt="">
