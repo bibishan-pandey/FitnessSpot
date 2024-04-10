@@ -45,9 +45,11 @@
                                 <div class="flex justify-between items-center lg:p-4 p-2.5">
                                     <div class="flex flex-1 items-start space-x-4">
                                         <a href="{% url 'auths:fitness-others-profile' username=post.author.username %}">
-                                            <img src="{{ post.author.profile.avatar.url }}"
-                                                 style="width: 40px; height: 40px;"
-                                                 class="bg-gray-200 border border-white rounded-full w-10 h-10">
+                                            {% if post.author.profile.avatar %}
+                                                <img src="{{ post.author.profile.avatar.url }}"
+                                                     style="width: 40px; height: 40px;"
+                                                     class="bg-gray-200 border border-white rounded-full w-10 h-10">
+                                            {% endif %}
                                         </a>
                                         <div class="flex-1 font-semibold">
                                             <a href=""
@@ -234,7 +236,8 @@
                                                 Comment
                                             </div>
                                         </a>
-                                        <a href="{% url 'core:post-detail' post.slug %}" class="flex items-center space-x-2">
+                                        <a href="{% url 'core:post-detail' post.slug %}"
+                                           class="flex items-center space-x-2">
                                             <div class="p-2 rounded-full  text-black lg:bg-gray-100 dark:bg-gray-600">
                                                 <i class="fa-solid fa-eye"></i>
                                             </div>
@@ -249,12 +252,16 @@
                                         {% if post.likes.all.count > 0 %}
                                             <div class="flex items-center">
                                                 {% for i in post.likes.all|slice:"3" %}
-                                                        {% if forloop.first %}
-                                                        <img src="{{ i.profile.avatar.url }}" alt=""
-                                                             class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    {% if forloop.first %}
+                                                        {% if i.profile.avatar %}
+                                                            <img src="{{ i.profile.avatar.url }}" alt=""
+                                                                 class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                        {% endif %}
                                                     {% else %}
-                                                        <img src="{{ i.profile.avatar.url }}" alt=""
-                                                             class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900 -ml-2">
+                                                        {% if i.profile.avatar %}
+                                                            <img src="{{ i.profile.avatar.url }}" alt=""
+                                                                 class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900 -ml-2">
+                                                        {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
                                             </div>
@@ -291,8 +298,10 @@
                                         {% for c in post.comments %}
                                             <div class="flex card shadow px-2 py-3" id="comment-div{{ c.id }}">
                                                 <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                                    <img src="{{ c.user.profile.avatar.url }}" alt=""
-                                                         class="absolute h-full rounded-full w-full">
+                                                    {% if c.user.profile.avatar %}
+                                                        <img src="{{ c.user.profile.avatar.url }}" alt=""
+                                                             class="absolute h-full rounded-full w-full">
+                                                    {% endif %}
                                                 </div>
                                                 <div class="w-full relative">
 
@@ -336,9 +345,11 @@
                                                             <div class="flex mr-12 mb-2 mt-2"
                                                                  style="margin-right: 20px;">
                                                                 <div class="w-10 h-10 rounded-full relative flex-shrink-0">
-                                                                    <img src="{{ r.user.profile.avatar.url }}"
-                                                                         style="width: 40px; height: 40px;" alt=""
-                                                                         class="absolute h-full rounded-full w-full">
+                                                                    {% if r.user.profile.avatar %}
+                                                                        <img src="{{ r.user.profile.avatar.url }}"
+                                                                             style="width: 40px; height: 40px;" alt=""
+                                                                             class="absolute h-full rounded-full w-full">
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div>
                                                                     <div class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12 dark:bg-gray-800 dark:text-gray-100">
