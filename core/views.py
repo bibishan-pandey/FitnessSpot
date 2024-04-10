@@ -286,21 +286,13 @@ def add_friend(request):
         friend_request = FriendRequest.objects.filter(from_user=to_user, to_user=from_user).first()
         if friend_request:
             friend_request.delete()
-        friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=to_user).first()
+
+        # Cancel the friend request if it exists
+        friend_request = FriendRequest.objects.get(from_user=from_user, to_user=to_user)
         if friend_request:
             friend_request.delete()
-        friend_request = FriendRequest(from_user=from_user, to_user=to_user)
-        friend_request.save()
 
-        # Send a notification to the sender
-        send_notification(
-            from_user=from_user,
-            to_user=to_user,
-            post=None,
-            comment=None,
-            notification_type=NOTIFICATION_NEW_FRIEND_REQUEST
-        )
-        return JsonResponse({'is_friend_request_sent': True})
+        return JsonResponse({'is_friend_request_sent': False})
     except FriendRequest.DoesNotExist:
         friend_request = FriendRequest(from_user=from_user, to_user=to_user)
         friend_request.save()
