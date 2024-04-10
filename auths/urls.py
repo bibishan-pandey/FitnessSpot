@@ -9,5 +9,6 @@ urlpatterns = [
     path('login/', views.signin, name='fitness-login'),
     path('logout/', views.signout, name='fitness-logout'),
     path('my-profile/', views.my_profile, name='fitness-profile'),
+    path('update-profile/', views.update_profile, name='fitness-update-profile'),
     path('profile/<str:username>/', views.others_profile, name='fitness-others-profile'),
 ]

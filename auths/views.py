@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
-from auths.forms import UserCreationForm
+from auths.forms import UserCreationForm, ProfileUpdateForm
 from auths.models import Profile, User
 from core.models import Workout, Friend, FriendRequest
 from utils.posts import get_posts_with_comments
@@ -67,9 +67,22 @@ def signin(request, *args, **kwargs):
     return render(request, 'auths/register.html')
 
 
+@login_required
 def signout(request):
     logout(request)
     return redirect("auths:fitness-register")
+
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('auths:fitness-profile')
+    else:
+        form = ProfileUpdateForm(instance=request.user.profile)
+    return render(request, 'auths/update-profile.html', {'form': form})
 
 
 @login_required

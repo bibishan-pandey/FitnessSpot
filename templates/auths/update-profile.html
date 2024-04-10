@@ -1,0 +1,21 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Fitness Spot - Update Profile{% endblock %}
+
+{% block content %}
+
+    <div class="main_content">
+        <div class="mcontainer">
+            <div class="profile user-profile p-5">
+                <h2>Update Profile (Work in progress, should work though)</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-400 text-white px-10 py-5">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
