@@ -288,7 +288,7 @@ def add_friend(request):
             friend_request.delete()
 
         # Cancel the friend request if it exists
-        friend_request = FriendRequest.objects.get(from_user=from_user, to_user=to_user)
+        friend_request = FriendRequest.objects.filter(from_user=from_user, to_user=to_user).first()
         if friend_request:
             friend_request.delete()
 
@@ -361,8 +361,9 @@ def reject_friend(request):
 
     # remove the notification also
     notification = Notification.objects.filter(from_user=from_user, to_user=to_user,
-                                               notification_type=NOTIFICATION_NEW_FRIEND_REQUEST)
-    notification.delete()
+                                               notification_type=NOTIFICATION_NEW_FRIEND_REQUEST).first()
+    if notification:
+        notification.delete()
 
     return JsonResponse({
         "is_friend": False
